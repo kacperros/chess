@@ -1,4 +1,10 @@
-package model;
+package model.figures;
+
+import model.Chessman;
+import model.Model;
+import model.Model.Color;
+import model.Model.Name;
+
 /**
  * Król
  * */

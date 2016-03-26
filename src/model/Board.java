@@ -1,5 +1,12 @@
 package model;
 
+import model.figures.Bishop;
+import model.figures.King;
+import model.figures.Knight;
+import model.figures.Pawn;
+import model.figures.Queen;
+import model.figures.Rook;
+
 public class Board {
 	/**tablica pól*/
 	private Field field [][];
