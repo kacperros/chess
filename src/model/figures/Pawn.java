@@ -1,23 +1,12 @@
 package model.figures;
 
-import model.Chessman;
 import model.Model;
-import model.Model.Color;
-import model.Model.Name;
-
 /**
  * Pionek
  * */
-public class Pawn extends Chessman{
+public class Pawn extends ChessPiece{
 
-	public Pawn(Model.Color color, Model.Name name) {
-		super(color, name);
+	public Pawn(Model.Color color) {
+		super(color, Model.Name.Pawn);
 	}
-	/**
-	@Override
-	public String getName() {
-		
-		return this.color.toString() + "Pawn";
-	}
-	*/
 }

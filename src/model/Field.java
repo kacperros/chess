@@ -1,60 +1,41 @@
 package model;
 
+import model.figures.ChessPiece;
+
 public class Field {
 	
-	private Chessman chessman;
-	int x;
-	int y;
+	private ChessPiece chessPiece;
+	private final FieldCoordinates fieldCoordinates;
 	
 	public Field(int x, int y)
 	{
-		this.chessman=null;
-		this.x = x;
-		this.y = y;
+		this.chessPiece=null;
+		this.fieldCoordinates = new FieldCoordinates(x, y);
 	}
 	
-	public Field(int x, int y, Chessman chessman)
+	public Field(int x, int y, ChessPiece chessman)
 	{
-		this.chessman=chessman;
-		this.x = x;
-		this.y = y;
+		this.chessPiece=chessman;
+		this.fieldCoordinates = new FieldCoordinates(x, y);
 	}
 	
-	public Model.Name getName()
+	public ChessPiece getChessPiece()
 	{
-		return this.chessman.getName();
-	}
-	/**
-	public String getName()
-	{
-		if (this.chessman != null)
-		{
-			return this.chessman.getName();
-		} 
-		else 
-		{
-			return "brak";
-		}
-	}
-	*/
-	public void addChessman(Chessman chessman)
-	{
-		this.chessman=chessman;
+		return this.chessPiece;
 	}
 	
-	public Chessman getChessman()
+	public void setChessPiece(ChessPiece chessman)
 	{
-		return this.chessman;
+		this.chessPiece = chessman;
 	}
 	
-	public void setChessman(Chessman chessman)
+	public void removeChessPiece()
 	{
-		this.chessman = chessman;
+		this.chessPiece=null;
 	}
 	
-	public void removeChessman()
-	{
-		this.chessman=null;
+	public FieldCoordinates getFieldCoordintes(){
+		return this.fieldCoordinates;
 	}
 	
 }

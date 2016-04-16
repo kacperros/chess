@@ -1,25 +1,14 @@
 package model.figures;
 
-import model.Chessman;
 import model.Model;
-import model.Model.Color;
-import model.Model.Name;
 
 /**
  * Goniec
  * */
-public class Bishop extends Chessman {
+public class Bishop extends ChessPiece {
 
-	public Bishop(Model.Color color, Model.Name name) {
-		super(color, name);
+	public Bishop(Model.Color color) {
+		super(color, Model.Name.Bishop);
 	}
 	
-	/**
-	@Override
-	public String getName() {
-		
-		return this.color.toString() + "Bishop";
-	}
-	*/
-
 }

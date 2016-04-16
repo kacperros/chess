@@ -7,9 +7,10 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-//import model.Field;
 import model.*;
+import model.Model.Color;
 import model.Model.Name;
+import model.figures.ChessPiece;
 
 /**
  * Klasa do wyswietlania figur
@@ -64,105 +65,83 @@ public class ViewChessman extends JPanel{
 	    }
 
 	    @Override
-	    protected void paintComponent(Graphics g) {
-	    	Chessman chessman = field.getChessman();
-	    	
-	    	//String name = field.getName();
-	        
+	    protected void paintComponent(Graphics g) {   	
 	    	super.paintComponent(g);
 	    	
-	    	if (chessman != null) {
-	    		Name name = chessman.getName();
-	        	switch(name)
-	        	{
-	        		case blackPawn:
-	    	    		g.drawImage(blackPawn, 17, 10, this);
-	    	    		break;
-	        		case blackRook:
-	        			g.drawImage(blackRook, 17, 10, this);
-	        			break;
-	        		case blackKnight:
-	        			g.drawImage(blackKnight, 17, 10, this);
-	        			break;
-	        		case blackBishop:
-	        			g.drawImage(blackBishop, 17, 10, this);
-	        			break;
-	        		case blackQueen:
-	        			g.drawImage(blackQueen, 17, 10, this);
-	        			break;
-	        		case blackKing:
-	        			g.drawImage(blackKing, 17, 10, this);
-	        			break;
-	        		case whitePawn:
-	    	    		g.drawImage(whitePawn, 17, 10, this);
-	    	    		break;
-	        		case whiteRook:
-	        			g.drawImage(whiteRook, 17, 10, this);
-	        			break;
-	        		case whiteKnight:
-	        			g.drawImage(whiteKnight, 17, 10, this);
-	        			break;
-	        		case whiteBishop:
-	        			g.drawImage(whiteBishop, 17, 10, this);
-	        			break;
-	        		case whiteQueen:
-	        			g.drawImage(whiteQueen, 17, 10, this);
-	        			break;
-	        		case whiteKing:
-	        			g.drawImage(whiteKing, 17, 10, this);
-	        			break;
-	        		default:
-	        			break;
-	        			
-	        	}
+	    	ChessPiece chessPiece = field.getChessPiece();
+	    	if (chessPiece != null) {
+	    		paintChessPiece(chessPiece, g);
 	        }
-	    	
-	    	/**
-	        if (name.equals("brak")==false) {
-	        	switch(name)
-	        	{
-	        		case "blackPawn":
-	    	    		g.drawImage(blackPawn, 17, 10, this);
-	    	    		break;
-	        		case "blackRook":
-	        			g.drawImage(blackRook, 17, 10, this);
-	        			break;
-	        		case "blackKnight":
-	        			g.drawImage(blackKnight, 17, 10, this);
-	        			break;
-	        		case "blackBishop":
-	        			g.drawImage(blackBishop, 17, 10, this);
-	        			break;
-	        		case "blackQueen":
-	        			g.drawImage(blackQueen, 17, 10, this);
-	        			break;
-	        		case "blackKing":
-	        			g.drawImage(blackKing, 17, 10, this);
-	        			break;
-	        		case "whitePawn":
-	    	    		g.drawImage(whitePawn, 17, 10, this);
-	    	    		break;
-	        		case "whiteRook":
-	        			g.drawImage(whiteRook, 17, 10, this);
-	        			break;
-	        		case "whiteKnight":
-	        			g.drawImage(whiteKnight, 17, 10, this);
-	        			break;
-	        		case "whiteBishop":
-	        			g.drawImage(whiteBishop, 17, 10, this);
-	        			break;
-	        		case "whiteQueen":
-	        			g.drawImage(whiteQueen, 17, 10, this);
-	        			break;
-	        		case "whiteKing":
-	        			g.drawImage(whiteKing, 17, 10, this);
-	        			break;
-	        		default:
-	        			break;
-	        			
-	        	}
-	        }
-	        */
 	    }
+	    
+	    private void paintChessPiece(ChessPiece chessPiece, Graphics g) {
+	    	Name name = chessPiece.getName();
+    		Color color = chessPiece.getColor();
+        	switch(name)
+        	{
+        		case Pawn:
+        			paintPawn(color, g);    	    		
+    	    		break;
+        		case Rook:
+        			paintRook(color, g);     			
+        			break;
+        		case Knight:
+        			paintKnight(color, g);
+        			break;
+        		case Bishop:
+        			paintBishop(color, g);
+        			break;
+        		case Queen:
+        			paintQueen(color, g);
+        			break;
+        		case King:
+        			paintKing(color, g);
+        			break;        		
+        		default:
+        			break;
+        			
+        	}			
+		}
 
+		private void paintKing(Color color, Graphics g) {
+			if(color.equals(Color.black))
+				g.drawImage(blackKing, 17, 10, this);
+			else
+				g.drawImage(whiteKing, 17, 10, this);			
+		}
+
+		private void paintQueen(Color color, Graphics g) {
+			if(color.equals(Color.black))
+				g.drawImage(blackQueen, 17, 10, this);
+			else
+				g.drawImage(whiteQueen, 17, 10, this);
+		}
+
+		private void paintBishop(Color color, Graphics g) {
+			if(color.equals(Color.black))
+				g.drawImage(blackBishop, 17, 10, this);
+			else
+				g.drawImage(whiteBishop, 17, 10, this);
+		}
+
+		private void paintKnight(Color color, Graphics g) {
+			if(color.equals(Color.black))
+				g.drawImage(blackKnight, 17, 10, this);
+			else
+				g.drawImage(whiteKnight, 17, 10, this);
+		}
+
+		private void paintRook(Color color, Graphics g) {
+			if(color.equals(Color.black))
+				g.drawImage(blackRook, 17, 10, this);
+			else
+				g.drawImage(whiteRook, 17, 10, this);
+		}
+
+		private void paintPawn(Color color, Graphics g) {
+			if(color.equals(Color.black))
+				g.drawImage(blackPawn, 17, 10, this);
+			else 
+				g.drawImage(whitePawn, 17, 10, this);			
+		}		
 }

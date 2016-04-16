@@ -17,18 +17,12 @@ public class Model {
 	
 	public enum Name 
 	{
-		whitePawn,
-		whiteRook,
-		whiteKnight,
-		whiteBishop,
-		whiteQueen,
-		whiteKing,
-		blackPawn,
-		blackRook,
-		blackKnight,
-		blackBishop,
-		blackQueen,
-		blackKing
+		Pawn,
+		Rook,
+		Knight,
+		Bishop,
+		Queen,
+		King
 	}
 	
 	
