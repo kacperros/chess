@@ -23,7 +23,7 @@ public class ViewBoard extends JPanel {
 		setLayout(new GridLayout(8, 8));
 		for(int i = 0 ; i < 8 ; i++){
 			for(int j = 0 ; j < 8 ; j++){
-				fields[i][j] = new ViewChessman(board.getField(i,j));
+				fields[i][j] = new ViewChessman(board.getField(j,7-i));
 				fields[i][j].setSize(100, 100);
 				if( i%2 == j%2 ) 
 					fields[i][j].setBackground(Color.YELLOW);

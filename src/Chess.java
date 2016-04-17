@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+import controller.ChessGame;
 import model.Model;
 
 import view.View;
@@ -31,6 +32,7 @@ public class Chess {
         }
 		
 	    Model model = new Model();
+	    ChessGame game = new ChessGame(model.getBoard());
 	    
 	    View view = new View(model.getBoard());
 		
