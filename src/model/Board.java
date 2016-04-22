@@ -26,12 +26,19 @@ public class Board {
 		placeWhitePawns();
 	}
 	
+	public void emptyBoard(){
+		for (int i=0;i<8;++i) {
+			for(int j=0;j<8;++j) 		
+				getField(i,j).removeChessPiece();
+		}
+	}
+	
 	public Field getField(int x, int y)
 	{
 		return this.field[y][x];
 	}
 	
-	public void placeBlackPieces () 
+	private void placeBlackPieces () 
 	{
 		this.field[0][0].setChessPiece(new Rook(Model.Color.white));
 		this.field[0][1].setChessPiece(new Knight(Model.Color.white));
@@ -44,13 +51,13 @@ public class Board {
 
 	}
 	
-	public void placeBlackPawns () 
+	private void placeBlackPawns () 
 	{
 		for (int i=0;i<8;++i)
 			this.field[1][i].setChessPiece(new Pawn(Model.Color.white));
 	}
 	
-	public void placeWhitePieces () 
+	private void placeWhitePieces () 
 	{
 		this.field[7][0].setChessPiece(new Rook(Model.Color.black));
 		this.field[7][1].setChessPiece(new Knight(Model.Color.black));
@@ -62,7 +69,7 @@ public class Board {
 		this.field[7][7].setChessPiece(new Rook(Model.Color.black));
 	}
 	
-	public void placeWhitePawns () 
+	private void placeWhitePawns () 
 	{
 		for (int i=0;i<8;++i)
 			this.field[6][i].setChessPiece(new Pawn(Model.Color.black));
