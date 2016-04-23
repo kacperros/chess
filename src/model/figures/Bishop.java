@@ -33,7 +33,7 @@ public class Bishop extends ChessPiece {
 					throw new InvalidMoveException();
 			}
 		}
-		targetField.removeChessPiece();
+		pieceField.removeChessPiece();
 		targetField.setChessPiece(this);	
 	}
 

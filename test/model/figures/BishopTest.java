@@ -103,4 +103,24 @@ public class BishopTest {
 		ChessPiece bishop = startField.getChessPiece();
 		bishop.movePiece(startField, board.getField(3, 0));
 	}
+	
+	@Test(expected = InvalidMoveException.class)
+	public void testKill() throws Exception{
+		Field startField = board.getField(3, 3);
+		ChessPiece bishop = startField.getChessPiece();
+		board.getField(6, 6).setChessPiece(new Rook(Model.Color.black, board));
+		bishop.movePiece(startField, board.getField(6,6));
+	}
+	
+	@Test
+	public void testKillValid() throws Exception{
+		Field startField = board.getField(3, 3);
+		ChessPiece bishop = startField.getChessPiece();
+		board.getField(6, 6).setChessPiece(new Rook(Model.Color.white, board));
+		bishop.movePiece(startField, board.getField(6,6));
+		
+		Field testField = board.getField(6, 6);
+		assertTrue(testField.getChessPiece().getName().equals(bishop.getName()));
+		assertTrue(testField.getChessPiece().getColor().equals(bishop.getColor()));
+	}
 }

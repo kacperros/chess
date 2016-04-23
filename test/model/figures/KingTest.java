@@ -35,6 +35,15 @@ private Board board;
 	}
 	
 	@Test(expected = InvalidMoveException.class)
+	public void moveKing_KillNotAllowed() throws Exception{
+		board.getField(3, 0).setChessPiece(new Rook(Model.Color.white, board));
+		Field kingField = board.getField(4, 0);
+		Field targetField = board.getField(3, 0);
+		ChessPiece king = kingField.getChessPiece();
+		king.movePiece(kingField, targetField);
+	}
+	
+	@Test(expected = InvalidMoveException.class)
 	public void moveKing_Invalid() throws Exception{
 		Field kingField = board.getField(4, 0);
 		Field targetField = board.getField(2, 0);

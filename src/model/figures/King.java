@@ -29,6 +29,9 @@ public class King extends ChessPiece{
 		int deltaY = Math.abs(end.y - start.y);
 		if(!((deltaX==1 && deltaY==0) || (deltaX==0 && deltaY==1)))
 			throw new InvalidMoveException();
+		if(targetField.getChessPiece() != null 
+				&& targetField.getChessPiece().getColor().equals(this.getColor()))
+			throw new InvalidMoveException();
 		wasMoved = true;
 		targetField.removeChessPiece();
 		targetField.setChessPiece(this);		
