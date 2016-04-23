@@ -18,7 +18,7 @@ public class ChessGame {
 		ChessPiece movedPiece = startField.getChessPiece();
 		if(!movedPiece.isInPossiblePath(startField, targetField) )
 			throw new ImpossiblePathException();
-		movedPiece.movePiece(board, startField, targetField);
+		movedPiece.movePiece(startField, targetField);
 	}
 
 }

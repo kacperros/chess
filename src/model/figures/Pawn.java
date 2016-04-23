@@ -11,12 +11,12 @@ import model.Model;
  */
 public class Pawn extends ChessPiece {
 
-	public Pawn(Model.Color color) {
-		super(color, Model.Name.Pawn);
+	public Pawn(Model.Color color, Board board) {
+		super(color, Model.Name.Pawn, board);
 	}
 
 	@Override
-	public void movePiece(Board board, Field pieceField, Field targetField) throws InvalidMoveException {
+	public void movePiece(Field pieceField, Field targetField) throws InvalidMoveException {
 		FieldCoordinates startCoordinates = pieceField.getFieldCoordintes();
 		FieldCoordinates endCoordinates = targetField.getFieldCoordintes();
 		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 1) {

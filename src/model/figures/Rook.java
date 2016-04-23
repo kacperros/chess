@@ -9,12 +9,12 @@ import model.Model;
  * */
 public class Rook extends ChessPiece {
 
-	public Rook(Model.Color color) {
-		super(color, Model.Name.Rook);
+	public Rook(Model.Color color, Board board) {
+		super(color, Model.Name.Rook, board);
 	}
 
 	@Override
-	public void movePiece(Board board, Field pieceField, Field targetField) {
+	public void movePiece(Field pieceField, Field targetField) {
 		// TODO Auto-generated method stub
 		
 	}

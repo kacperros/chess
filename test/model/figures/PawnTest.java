@@ -18,7 +18,7 @@ public class PawnTest {
 		Field endField = board.getField(3, 2);
 		Pawn testPawn = (Pawn) startField.getChessPiece();
 		
-		testPawn.movePiece(board, startField, endField);
+		testPawn.movePiece(startField, endField);
 				
 		assertTrue(endField.getChessPiece() != null);
 		assertTrue(endField.getChessPiece().getColor().equals(Model.Color.white));
@@ -30,9 +30,9 @@ public class PawnTest {
 		Field startField = board.getField(3, 1);
 		Field endField = board.getField(3, 2);
 		Pawn testPawn = (Pawn) startField.getChessPiece();
-		endField.setChessPiece(new Rook(Model.Color.black));
+		endField.setChessPiece(new Rook(Model.Color.black, board));
 		
-		testPawn.movePiece(board, startField, endField);		
+		testPawn.movePiece(startField, endField);		
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class PawnTest {
 		Field endField = board.getField(3, 3);
 		Pawn testPawn = (Pawn) startField.getChessPiece();
 		
-		testPawn.movePiece(board, startField, endField);
+		testPawn.movePiece(startField, endField);
 				
 		assertTrue(endField.getChessPiece() != null);
 		assertTrue(endField.getChessPiece().getColor().equals(Model.Color.white));
@@ -54,10 +54,10 @@ public class PawnTest {
 		Field startField = board.getField(3, 1);
 		Field endField = board.getField(3, 3);
 		Field transitField = board.getField(3, 2);
-		transitField.setChessPiece(new Rook(Model.Color.black));
+		transitField.setChessPiece(new Rook(Model.Color.black, board));
 		Pawn testPawn = (Pawn) startField.getChessPiece();
 		
-		testPawn.movePiece(board, startField, endField);
+		testPawn.movePiece(startField, endField);
 	}
 	
 	@Test (expected=InvalidMoveException.class)
@@ -65,10 +65,10 @@ public class PawnTest {
 		Board board = new Board();
 		Field startField = board.getField(3, 1);
 		Field endField = board.getField(3, 3);
-		endField.setChessPiece(new Rook(Model.Color.black));
+		endField.setChessPiece(new Rook(Model.Color.black, board));
 		Pawn testPawn = (Pawn) startField.getChessPiece();
 		
-		testPawn.movePiece(board, startField, endField);
+		testPawn.movePiece(startField, endField);
 	}
 	
 	@Test
@@ -76,10 +76,10 @@ public class PawnTest {
 		Board board = new Board();
 		Field startField = board.getField(3, 1);
 		Field endField = board.getField(4, 2);
-		endField.setChessPiece(new Rook(Model.Color.black));
+		endField.setChessPiece(new Rook(Model.Color.black, board));
 		Pawn testPawn = (Pawn) startField.getChessPiece();
 		
-		testPawn.movePiece(board, startField, endField);
+		testPawn.movePiece(startField, endField);
 	}
 	
 	@Test (expected = InvalidMoveException.class)
@@ -87,10 +87,10 @@ public class PawnTest {
 		Board board = new Board();
 		Field startField = board.getField(3, 1);
 		Field endField = board.getField(4, 2);
-		endField.setChessPiece(new Rook(Model.Color.white));
+		endField.setChessPiece(new Rook(Model.Color.white, board));
 		Pawn testPawn = (Pawn) startField.getChessPiece();
 		
-		testPawn.movePiece(board, startField, endField);
+		testPawn.movePiece( startField, endField);
 	}
 
 }

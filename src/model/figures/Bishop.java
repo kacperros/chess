@@ -10,12 +10,12 @@ import model.Model;
  * */
 public class Bishop extends ChessPiece {
 
-	public Bishop(Model.Color color) {
-		super(color, Model.Name.Bishop);
+	public Bishop(Model.Color color, Board board) {
+		super(color, Model.Name.Bishop, board);
 	}
 
 	@Override
-	public void movePiece(Board board, Field pieceField, Field targetField) throws InvalidMoveException{
+	public void movePiece(Field pieceField, Field targetField) throws InvalidMoveException{
 		int deltaX = targetField.getFieldCoordintes().x - pieceField.getFieldCoordintes().x;
 		int deltaY = targetField.getFieldCoordintes().y - pieceField.getFieldCoordintes().y;
 		if(Math.abs(deltaX) != Math.abs(deltaY))

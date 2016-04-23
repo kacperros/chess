@@ -18,14 +18,14 @@ public class BishopTest {
 		board = new Board();
 		board.emptyBoard();
 		Field testField = board.getField(3, 3);
-		testField.setChessPiece(new Bishop(Model.Color.black));
+		testField.setChessPiece(new Bishop(Model.Color.black, board));
 	}
 	
 	@Test
 	public void testMoveUpLeft() throws Exception{
 		Field startField = board.getField(3, 3);
 		ChessPiece bishop = startField.getChessPiece();
-		bishop.movePiece(board, startField, board.getField(1, 5));
+		bishop.movePiece(startField, board.getField(1, 5));
 		
 		Field testField = board.getField(1, 5);
 		assertTrue(testField.getChessPiece().getName().equals(bishop.getName()));
@@ -36,7 +36,7 @@ public class BishopTest {
 	public void testMoveUpRight() throws Exception{
 		Field startField = board.getField(3, 3);
 		ChessPiece bishop = startField.getChessPiece();
-		bishop.movePiece(board, startField, board.getField(6,6));
+		bishop.movePiece(startField, board.getField(6,6));
 		
 		Field testField = board.getField(6,6);
 		assertTrue(testField.getChessPiece().getName().equals(bishop.getName()));
@@ -47,7 +47,7 @@ public class BishopTest {
 	public void testMoveDownLeft() throws Exception{
 		Field startField = board.getField(3, 3);
 		ChessPiece bishop = startField.getChessPiece();
-		bishop.movePiece(board, startField, board.getField(0, 0));
+		bishop.movePiece(startField, board.getField(0, 0));
 		
 		Field testField = board.getField(0, 0);
 		assertTrue(testField.getChessPiece().getName().equals(bishop.getName()));
@@ -58,7 +58,7 @@ public class BishopTest {
 	public void testMoveDownRight() throws Exception{
 		Field startField = board.getField(3, 3);
 		ChessPiece bishop = startField.getChessPiece();
-		bishop.movePiece(board, startField, board.getField(6, 0));
+		bishop.movePiece(startField, board.getField(6, 0));
 		
 		Field testField = board.getField(6, 0);
 		assertTrue(testField.getChessPiece().getName().equals(bishop.getName()));
@@ -69,38 +69,38 @@ public class BishopTest {
 	public void testMoveUpLeft_Obstacle() throws Exception{
 		Field startField = board.getField(3, 3);
 		Bishop bishop = (Bishop)startField.getChessPiece();
-		board.getField(2, 4).setChessPiece(new Bishop(Model.Color.black));
-		bishop.movePiece(board, startField, board.getField(1, 5));
+		board.getField(2, 4).setChessPiece(new Bishop(Model.Color.black, board));
+		bishop.movePiece(startField, board.getField(1, 5));
 	}
 	
 	@Test(expected = InvalidMoveException.class)
 	public void testMoveUpRight_Obstacle() throws Exception{
 		Field startField = board.getField(3, 3);
 		ChessPiece bishop = startField.getChessPiece();
-		board.getField(4, 4).setChessPiece(new Bishop(Model.Color.black));
-		bishop.movePiece(board, startField, board.getField(6,6));
+		board.getField(4, 4).setChessPiece(new Bishop(Model.Color.black, board));
+		bishop.movePiece(startField, board.getField(6,6));
 	}
 	
 	@Test(expected = InvalidMoveException.class)
 	public void testMoveDownLeft_Obstacle() throws Exception{
 		Field startField = board.getField(3, 3);
 		ChessPiece bishop = startField.getChessPiece();
-		board.getField(1, 1).setChessPiece(new Bishop(Model.Color.black));
-		bishop.movePiece(board, startField, board.getField(0, 0));
+		board.getField(1, 1).setChessPiece(new Bishop(Model.Color.black, board));
+		bishop.movePiece( startField, board.getField(0, 0));
 	}
 	
 	@Test(expected = InvalidMoveException.class)
 	public void testMoveDownRight_Obstacle() throws Exception{
 		Field startField = board.getField(3, 3);
 		ChessPiece bishop = startField.getChessPiece();
-		board.getField(5,1).setChessPiece(new Bishop(Model.Color.black));
-		bishop.movePiece(board, startField, board.getField(6, 0));
+		board.getField(5,1).setChessPiece(new Bishop(Model.Color.black, board));
+		bishop.movePiece(startField, board.getField(6, 0));
 	}
 	
 	@Test(expected = InvalidMoveException.class)
 	public void testInvalidMove() throws Exception{
 		Field startField = board.getField(3, 3);
 		ChessPiece bishop = startField.getChessPiece();
-		bishop.movePiece(board, startField, board.getField(3, 0));
+		bishop.movePiece(startField, board.getField(3, 0));
 	}
 }
