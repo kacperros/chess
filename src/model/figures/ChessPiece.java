@@ -1,5 +1,7 @@
 package model.figures;
 
+import java.util.List;
+
 import exceptions.InvalidMoveException;
 import model.Board;
 import model.Field;
@@ -40,6 +42,8 @@ public abstract class ChessPiece {
 	public abstract void movePiece(Field pieceField, Field targetField) throws InvalidMoveException;
 
 	public abstract boolean isInPossiblePath(Field pieceField, Field targetField);
+	
+	public abstract List<Field> possibleMoves();
 
 	@Override
 	public int hashCode() {

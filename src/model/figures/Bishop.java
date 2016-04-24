@@ -1,5 +1,7 @@
 package model.figures;
 
+import java.util.List;
+
 import exceptions.InvalidMoveException;
 import model.Board;
 import model.Field;
@@ -41,6 +43,12 @@ public class Bishop extends ChessPiece {
 	public boolean isInPossiblePath(Field pieceField, Field targetField) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<Field> possibleMoves() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

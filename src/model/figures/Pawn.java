@@ -1,5 +1,7 @@
 package model.figures;
 
+import java.util.List;
+
 import exceptions.InvalidMoveException;
 import model.Board;
 import model.Field;
@@ -68,5 +70,11 @@ public class Pawn extends ChessPiece {
 				&& targetField.getChessPiece().getColor() != getColor())
 			return true;
 		return false;
+	}
+
+	@Override
+	public List<Field> possibleMoves() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
