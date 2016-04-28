@@ -37,6 +37,13 @@ public class Queen extends ChessPiece{
 	}
 
 	private void moveLikeRook(Field pieceField, Field targetField) throws InvalidMoveException{
+		if(!isMoveLikeRook(pieceField, targetField))
+			throw new InvalidMoveException();
+		pieceField.removeChessPiece();
+		targetField.setChessPiece(this);		
+	}
+	
+	private boolean isMoveLikeRook(Field pieceField, Field targetField){
 		FieldCoordinates start = pieceField.getFieldCoordintes();
 		FieldCoordinates end = targetField.getFieldCoordintes();
 		int deltaX = end.x - start.x;
@@ -50,10 +57,9 @@ public class Queen extends ChessPiece{
 			if(nextField.getChessPiece() != null 
 					&& (i != delta 
 					|| nextField.getChessPiece().getColor() == this.getColor()))
-				throw new InvalidMoveException();
+				return false;
 		}
-		pieceField.removeChessPiece();
-		targetField.setChessPiece(this);		
+		return true;
 	}
 	
 	private int setDerivativeChange(int delta) {
@@ -65,10 +71,17 @@ public class Queen extends ChessPiece{
 	
 
 	private void moveLikeBishop(Field pieceField, Field targetField) throws InvalidMoveException{
+		if(!isMoveLikeBishop(pieceField, targetField))
+			throw new InvalidMoveException();
+		pieceField.removeChessPiece();
+		targetField.setChessPiece(this);		
+	}
+	
+	private boolean isMoveLikeBishop(Field pieceField, Field targetField) {
 		int deltaX = targetField.getFieldCoordintes().x - pieceField.getFieldCoordintes().x;
 		int deltaY = targetField.getFieldCoordintes().y - pieceField.getFieldCoordintes().y;
 		if(Math.abs(deltaX) != Math.abs(deltaY))
-			throw new InvalidMoveException();
+			return false;
 		int dx = deltaX/Math.abs(deltaX);
 		int dy = deltaY/Math.abs(deltaY);
 		int startX = pieceField.getFieldCoordintes().x;
@@ -79,16 +92,22 @@ public class Queen extends ChessPiece{
 			if(nextField.getChessPiece() != null 
 					&& (i != Math.abs(deltaX) 
 						|| nextField.getChessPiece().getColor() == this.getColor())){
-					throw new InvalidMoveException();
+					return false;
 			}
 		}
-		pieceField.removeChessPiece();
-		targetField.setChessPiece(this);		
+		return true;
 	}
 
 	@Override
-	public boolean isInPossiblePath(Field pieceField, Field targetField) {
-		// TODO Auto-generated method stub
+	public boolean isMovePossible(Field pieceField, Field targetField) {
+		FieldCoordinates start = pieceField.getFieldCoordintes();
+		FieldCoordinates end = targetField.getFieldCoordintes();
+		int deltaX = end.x - start.x;
+		int deltaY = end.y - start.y;
+		if ((deltaX == 0 && deltaY != 0) || (deltaX != 0 && deltaY == 0))
+			return isMoveLikeRook(pieceField, targetField);
+		if (Math.abs(deltaX) == Math.abs(deltaY))
+			return isMoveLikeBishop(pieceField, targetField);
 		return false;
 	}
 

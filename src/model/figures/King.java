@@ -93,9 +93,20 @@ public class King extends ChessPiece{
 
 	
 	@Override
-	public boolean isInPossiblePath(Field pieceField, Field targetField) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isMovePossible(Field pieceField, Field targetField) {
+		FieldCoordinates start = pieceField.getFieldCoordintes();
+		FieldCoordinates end = targetField.getFieldCoordintes();
+		if(!wasMoved && checkForCastle(pieceField, targetField)){
+			return true;
+		}
+		int deltaX = Math.abs(end.x - start.x);
+		int deltaY = Math.abs(end.y - start.y);
+		if(!((deltaX==1 && deltaY==0) || (deltaX==0 && deltaY==1)))
+			return false;
+		if(targetField.getChessPiece() != null 
+				&& targetField.getChessPiece().getColor().equals(this.getColor()))
+			return false;
+		return true;
 	}
 
 	@Override

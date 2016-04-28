@@ -19,23 +19,8 @@ public class Rook extends ChessPiece {
 
 	@Override
 	public void movePiece(Field pieceField, Field targetField) throws InvalidMoveException{
-		FieldCoordinates start = pieceField.getFieldCoordintes();
-		FieldCoordinates end = targetField.getFieldCoordintes();
-		int deltaX = end.x - start.x;
-		int deltaY = end.y - start.y;
-		if(deltaX != 0 && deltaY != 0)
+		if(!isMovePossible(pieceField, targetField))
 			throw new InvalidMoveException();
-		Field nextField;
-		int dx = setDerivativeChange(deltaX);
-		int dy = setDerivativeChange(deltaY);
-		int delta =  Math.abs(Math.max(Math.abs(deltaX), Math.abs(deltaY)));
-		for(int i = 1; i <= delta ; i++){
-			nextField = board.getField(start.x + i*dx, start.y+i*dy);
-			if(nextField.getChessPiece() != null 
-					&& (i != delta 
-					|| nextField.getChessPiece().getColor() == this.getColor()))
-				throw new InvalidMoveException();
-		}
 		pieceField.removeChessPiece();
 		targetField.setChessPiece(this);		
 	}
@@ -48,9 +33,25 @@ public class Rook extends ChessPiece {
 	}
 
 	@Override
-	public boolean isInPossiblePath(Field pieceField, Field targetField) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isMovePossible(Field pieceField, Field targetField) {
+		FieldCoordinates start = pieceField.getFieldCoordintes();
+		FieldCoordinates end = targetField.getFieldCoordintes();
+		int deltaX = end.x - start.x;
+		int deltaY = end.y - start.y;
+		if(deltaX != 0 && deltaY != 0)
+			return false;
+		Field nextField;
+		int dx = setDerivativeChange(deltaX);
+		int dy = setDerivativeChange(deltaY);
+		int delta =  Math.abs(Math.max(Math.abs(deltaX), Math.abs(deltaY)));
+		for(int i = 1; i <= delta ; i++){
+			nextField = board.getField(start.x + i*dx, start.y+i*dy);
+			if(nextField.getChessPiece() != null 
+					&& (i != delta 
+					|| nextField.getChessPiece().getColor() == this.getColor()))
+				return false;
+		}
+		return true;
 	}
 
 	@Override

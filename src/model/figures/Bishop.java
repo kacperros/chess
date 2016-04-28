@@ -18,10 +18,20 @@ public class Bishop extends ChessPiece {
 
 	@Override
 	public void movePiece(Field pieceField, Field targetField) throws InvalidMoveException{
+		if (!isMovePossible(pieceField, targetField))
+			throw new InvalidMoveException();
+		else {
+			pieceField.removeChessPiece();
+			targetField.setChessPiece(this);
+		}
+	}
+
+	@Override
+	public boolean isMovePossible(Field pieceField, Field targetField) {
 		int deltaX = targetField.getFieldCoordintes().x - pieceField.getFieldCoordintes().x;
 		int deltaY = targetField.getFieldCoordintes().y - pieceField.getFieldCoordintes().y;
 		if(Math.abs(deltaX) != Math.abs(deltaY))
-			throw new InvalidMoveException();
+			return false;
 		int dx = deltaX/Math.abs(deltaX);
 		int dy = deltaY/Math.abs(deltaY);
 		int startX = pieceField.getFieldCoordintes().x;
@@ -32,17 +42,10 @@ public class Bishop extends ChessPiece {
 			if(nextField.getChessPiece() != null 
 					&& (i != Math.abs(deltaX) 
 						|| nextField.getChessPiece().getColor() == this.getColor())){
-					throw new InvalidMoveException();
+					return false;
 			}
 		}
-		pieceField.removeChessPiece();
-		targetField.setChessPiece(this);	
-	}
-
-	@Override
-	public boolean isInPossiblePath(Field pieceField, Field targetField) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

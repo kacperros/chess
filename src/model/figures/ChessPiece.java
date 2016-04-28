@@ -41,7 +41,7 @@ public abstract class ChessPiece {
 
 	public abstract void movePiece(Field pieceField, Field targetField) throws InvalidMoveException;
 
-	public abstract boolean isInPossiblePath(Field pieceField, Field targetField);
+	public abstract boolean isMovePossible(Field pieceField, Field targetField);
 	
 	public abstract List<Field> possibleMoves();
 

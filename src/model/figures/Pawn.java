@@ -54,7 +54,7 @@ public class Pawn extends ChessPiece {
 	}
 
 	@Override
-	public boolean isInPossiblePath(Field pieceField, Field targetField) {
+	public boolean isMovePossible(Field pieceField, Field targetField) {
 		FieldCoordinates startCoordinates = pieceField.getFieldCoordintes();
 		FieldCoordinates endCoordinates = targetField.getFieldCoordintes();
 		if (startCoordinates.x == endCoordinates.x 
