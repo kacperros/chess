@@ -1,5 +1,6 @@
 package model.figures;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.InvalidMoveException;
@@ -113,8 +114,31 @@ public class Queen extends ChessPiece{
 
 	@Override
 	public List<Field> getPossibleMoves(Field pieceField) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Field> possibleFields = new ArrayList<>();
+		int dx[] = { 1, 1, -1, -1, 1, -1, 0, 0 };
+		int dy[] = { 1, -1, 1, -1, 0, 0, 1, -1 };
+		for (int i = 0; i < 8; i++)
+			possibleFields.addAll(getPossibleFieldsInDirection(pieceField, dx[i], dy[i]));
+		return possibleFields;
+	}
+
+	private List<Field> getPossibleFieldsInDirection(Field pieceField, int dx, int dy) {
+		List<Field> result = new ArrayList<>();
+		int x = pieceField.getFieldCoordintes().x + dx;
+		int y = pieceField.getFieldCoordintes().y + dy;
+		Field nextField;
+		while (x <= 7 && y <= 7 && x >= 0 && y >= 0) {
+			nextField = board.getField(x, y);
+			if (nextField.getChessPiece() != null) {
+				if (!this.getColor().equals(nextField.getChessPiece().getColor()))
+					result.add(nextField);
+				break;
+			}
+			result.add(nextField);
+			x = x + dx;
+			y = y + dy;
+		}
+		return result;
 	}
 
 

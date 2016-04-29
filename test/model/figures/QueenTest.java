@@ -2,6 +2,8 @@ package model.figures;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -207,6 +209,24 @@ public class QueenTest {
 		
 		assertTrue(start.getChessPiece() == null);
 		assertTrue(end.getChessPiece().equals(queen));
+	}
+	
+	@Test
+	public void possibleMoves() throws Exception{
+		Field start = board.getField(3, 3);
+		queen = start.getChessPiece();
+		List<Field> fields = queen.getPossibleMoves(start);
+		assertTrue(fields.size() == 24 );
+	}
+	
+	@Test
+	public void possibleMovesFromCorner() throws Exception{
+		Field start = board.getField(3, 3);
+		start.removeChessPiece();
+		start = board.getField(0, 0);
+		start.setChessPiece(new Queen(Model.Color.white, board));
+		List<Field> fields = queen.getPossibleMoves(start);
+		assertTrue(fields.size() == 20 );
 	}
 	
 }
