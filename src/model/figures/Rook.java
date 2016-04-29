@@ -1,5 +1,6 @@
 package model.figures;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.InvalidMoveException;
@@ -38,7 +39,7 @@ public class Rook extends ChessPiece {
 		FieldCoordinates end = targetField.getFieldCoordintes();
 		int deltaX = end.x - start.x;
 		int deltaY = end.y - start.y;
-		if(deltaX != 0 && deltaY != 0)
+		if(deltaX != 0 && deltaY != 0 || (end.x==start.x && end.y==start.y))
 			return false;
 		Field nextField;
 		int dx = setDerivativeChange(deltaX);
@@ -55,10 +56,43 @@ public class Rook extends ChessPiece {
 	}
 
 	@Override
-	public List<Field> possibleMoves() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Field> getPossibleMoves(Field pieceField) {
+		List<Field> finalFields = getFinalFields(pieceField);
+		List<Field> possibleFields = new ArrayList<>();
+		for(Field finalField : finalFields)
+			possibleFields.addAll(getPossibleFieldsInPath(pieceField, finalField));		
+		return possibleFields;
 	}
 
+	private List<Field> getFinalFields(Field pieceField) {
+		List<Field> finalFields = new ArrayList<>();
+		FieldCoordinates startCoordinates = pieceField.getFieldCoordintes();
+		finalFields.add(board.getField(startCoordinates.x, 0));
+		finalFields.add(board.getField(startCoordinates.x, 7));
+		finalFields.add(board.getField(0, startCoordinates.y));
+		finalFields.add(board.getField(7, startCoordinates.y));
+		return finalFields;
+	}
 	
+	private List<Field> getPossibleFieldsInPath(Field pieceField, Field finalField) {
+		List<Field> result = new ArrayList<>();
+		FieldCoordinates start = pieceField.getFieldCoordintes();
+		FieldCoordinates end = finalField.getFieldCoordintes();
+		int deltaX = end.x - start.x;
+		int deltaY = end.y - start.y;
+		int dx = setDerivativeChange(deltaX);
+		int dy = setDerivativeChange(deltaY);
+		int delta =  Math.abs(Math.max(Math.abs(deltaX), Math.abs(deltaY)));
+		Field nextField;
+		for(int i = 1; i <= delta ; i++){
+			nextField = board.getField(start.x + i*dx, start.y+i*dy);
+			if(nextField.getChessPiece() != null){
+				if(!this.getColor().equals(nextField.getChessPiece().getColor()))
+					result.add(nextField);
+				break;					
+			}
+			result.add(nextField);
+		}
+		return result;
+	}	
 }

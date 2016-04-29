@@ -43,7 +43,7 @@ public abstract class ChessPiece {
 
 	public abstract boolean isMovePossible(Field pieceField, Field targetField);
 	
-	public abstract List<Field> possibleMoves();
+	public abstract List<Field> getPossibleMoves(Field pieceField);
 
 	@Override
 	public int hashCode() {

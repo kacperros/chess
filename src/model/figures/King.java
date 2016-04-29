@@ -110,7 +110,7 @@ public class King extends ChessPiece{
 	}
 
 	@Override
-	public List<Field> possibleMoves() {
+	public List<Field> getPossibleMoves(Field pieceField) {
 		// TODO Auto-generated method stub
 		return null;
 	}
