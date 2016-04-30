@@ -14,13 +14,12 @@ import model.Model.Color;
  * Pionek
  */
 public class Pawn extends ChessPiece {
-	
+
 	private final int direction;
 
 	public Pawn(Model.Color color, Board board) {
 		super(color, Model.Name.Pawn, board);
-		
-		if (this.getColor() == Color.white) {
+		if (this.getColor().equals(Color.white)) {
 			direction = -1;
 		} else {
 			direction = 1;
@@ -64,12 +63,15 @@ public class Pawn extends ChessPiece {
 	public boolean isMovePossible(Field pieceField, Field targetField) {
 		FieldCoordinates startCoordinates = pieceField.getFieldCoordintes();
 		FieldCoordinates endCoordinates = targetField.getFieldCoordintes();
-		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 1)
+		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y + direction)
 			return true;
-		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 2
-				&& startCoordinates.y == 1)
-			return true;
-		if (Math.abs(startCoordinates.x - endCoordinates.x) == 1 && startCoordinates.y == endCoordinates.y - 1
+		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y + direction * 2) {
+			if (this.getColor().equals(Color.white) && startCoordinates.y == 6)
+				return true;
+			if (this.getColor().equals(Color.black) && startCoordinates.y == 1)
+				return true;
+		}
+		if (Math.abs(startCoordinates.x - endCoordinates.x) == 1 && startCoordinates.y == endCoordinates.y + direction
 				&& targetField.getChessPiece() != null && targetField.getChessPiece().getColor() != getColor())
 			return true;
 		return false;
@@ -83,7 +85,7 @@ public class Pawn extends ChessPiece {
 		addPossibleMove(possibleFields, pieceField, 1, direction);
 		return possibleFields;
 	}
-	
+
 	private void addPossibleMove(List<Field> possibleFields, Field pieceField, int moveX, int moveY) {
 		FieldCoordinates fieldCoordinates = pieceField.getFieldCoordintes();
 		if (isMovePossible(pieceField, board.getField(fieldCoordinates.x + moveX, fieldCoordinates.y + moveY)))
