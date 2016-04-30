@@ -8,12 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import exceptions.InvalidMoveException;
-import model.Board;
-import model.Field;
 import model.Model;
 import model.figures.Bishop;
 import model.figures.ChessPiece;
 import model.figures.Rook;
+import model.game.Board;
+import model.game.Field;
 
 public class BishopTest {
 	private Board board;

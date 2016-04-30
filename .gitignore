@@ -1,2 +1,5 @@
 bin/
 .settings/
+chess/target/
+.project
+.classpath

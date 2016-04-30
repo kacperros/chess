@@ -1,5 +1,6 @@
-package model;
+package model.game;
 
+import model.Model;
 import model.figures.Bishop;
 import model.figures.King;
 import model.figures.Knight;

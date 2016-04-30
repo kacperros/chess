@@ -3,9 +3,9 @@ package model.figures;
 import java.util.List;
 
 import exceptions.InvalidMoveException;
-import model.Board;
-import model.Field;
 import model.Model;
+import model.game.Board;
+import model.game.Field;
 
 /**
  * Abstrakcyjna klasa, po której dziedziczą wszystkie figury.

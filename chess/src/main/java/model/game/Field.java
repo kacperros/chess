@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import model.figures.ChessPiece;
 
@@ -36,6 +36,5 @@ public class Field {
 	
 	public FieldCoordinates getFieldCoordintes(){
 		return this.fieldCoordinates;
-	}
-	
+	}	
 }

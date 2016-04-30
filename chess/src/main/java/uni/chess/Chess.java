@@ -2,6 +2,7 @@ package uni.chess;
 import java.util.Scanner;
 
 import controller.ChessGame;
+import logger.MoveLogger;
 import model.Model;
 
 import view.View;
@@ -33,7 +34,7 @@ public class Chess {
         }
 		
 	    Model model = new Model();
-	    ChessGame game = new ChessGame(model.getBoard());
+	    ChessGame game = new ChessGame(model.getBoard(), new MoveLogger(), Model.Color.white);
 	    
 	    View view = new View(model.getBoard());
 		
