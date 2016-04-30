@@ -1,3 +1,4 @@
+package uni.chess;
 import java.util.Scanner;
 
 import controller.ChessGame;

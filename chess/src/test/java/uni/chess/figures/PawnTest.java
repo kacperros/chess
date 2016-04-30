@@ -1,4 +1,4 @@
-package model.figures;
+package uni.chess.figures;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,8 @@ import exceptions.InvalidMoveException;
 import model.Board;
 import model.Field;
 import model.Model;
+import model.figures.Pawn;
+import model.figures.Rook;
 
 public class PawnTest {
 

@@ -1,4 +1,4 @@
-package model.figures;
+package uni.chess.figures;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,9 @@ import exceptions.InvalidMoveException;
 import model.Board;
 import model.Field;
 import model.Model;
+import model.figures.ChessPiece;
+import model.figures.King;
+import model.figures.Rook;
 
 public class KingTest {
 	
