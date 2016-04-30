@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.InvalidMoveException;
-import model.Board;
-import model.Field;
-import model.FieldCoordinates;
 import model.Model;
+import model.game.Board;
+import model.game.Field;
+import model.game.FieldCoordinates;
 
 /**
  * Hetman

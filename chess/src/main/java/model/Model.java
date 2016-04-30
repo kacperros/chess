@@ -1,4 +1,7 @@
 package model;
+
+import model.game.Board;
+
 /**
  * Model gry. Zawiera wszystkie struktury danych reprezentujace elementy gry i zasady
  * dotyczace rozgrywki.

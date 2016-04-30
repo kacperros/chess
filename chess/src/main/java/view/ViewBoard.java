@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
-import model.Board;
+import model.game.Board;
 
 public class ViewBoard extends JPanel {
 

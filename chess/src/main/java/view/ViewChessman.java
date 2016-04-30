@@ -11,6 +11,7 @@ import model.*;
 import model.Model.Color;
 import model.Model.Name;
 import model.figures.ChessPiece;
+import model.game.Field;
 
 /**
  * Klasa do wyswietlania figur

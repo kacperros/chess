@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import exceptions.InvalidMoveException;
-import model.Board;
-import model.Field;
 import model.Model;
 import model.figures.Pawn;
 import model.figures.Rook;
+import model.game.Board;
+import model.game.Field;
 
 public class PawnTest {
 
