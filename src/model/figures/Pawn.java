@@ -15,15 +15,8 @@ import model.Model.Color;
  */
 public class Pawn extends ChessPiece {
 
-	private final int direction;
-
 	public Pawn(Model.Color color, Board board) {
 		super(color, Model.Name.Pawn, board);
-		if (this.getColor().equals(Color.white)) {
-			direction = -1;
-		} else {
-			direction = 1;
-		}
 	}
 
 	@Override
@@ -63,15 +56,13 @@ public class Pawn extends ChessPiece {
 	public boolean isMovePossible(Field pieceField, Field targetField) {
 		FieldCoordinates startCoordinates = pieceField.getFieldCoordintes();
 		FieldCoordinates endCoordinates = targetField.getFieldCoordintes();
-		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y + direction)
+		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 1)
 			return true;
-		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y + direction * 2) {
-			if (this.getColor().equals(Color.white) && startCoordinates.y == 6)
-				return true;
-			if (this.getColor().equals(Color.black) && startCoordinates.y == 1)
-				return true;
+		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 2
+				&& startCoordinates.y == 1) {
+			return true;
 		}
-		if (Math.abs(startCoordinates.x - endCoordinates.x) == 1 && startCoordinates.y == endCoordinates.y + direction
+		if (Math.abs(startCoordinates.x - endCoordinates.x) == 1 && startCoordinates.y == endCoordinates.y - 1
 				&& targetField.getChessPiece() != null && targetField.getChessPiece().getColor() != getColor())
 			return true;
 		return false;
@@ -80,9 +71,9 @@ public class Pawn extends ChessPiece {
 	@Override
 	public List<Field> getPossibleMoves(Field pieceField) {
 		List<Field> possibleFields = new ArrayList<>();
-		addPossibleMove(possibleFields, pieceField, -1, direction);
-		addPossibleMove(possibleFields, pieceField, 0, direction);
-		addPossibleMove(possibleFields, pieceField, 1, direction);
+		addPossibleMove(possibleFields, pieceField, -1, -1);
+		addPossibleMove(possibleFields, pieceField, 0, -1);
+		addPossibleMove(possibleFields, pieceField, 1, -1);
 		return possibleFields;
 	}
 
