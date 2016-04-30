@@ -43,6 +43,7 @@ public class ChessGame {
 		updatePlayers(startField, targetField);
 		logger.commitLogTransaction(startField, targetField, moveResult);
 		switchPlayers();
+		board.renumberFields();
 		return moveResult;		
 	}
 	

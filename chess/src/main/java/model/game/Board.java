@@ -77,5 +77,10 @@ public class Board {
 		for (int i=0;i<8;++i)
 			this.field[6][i].setChessPiece(new Pawn(Model.Color.black, this));
 	}
+
+	public void renumberFields() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
