@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import exceptions.ImpossiblePathException;
 import exceptions.InvalidMoveException;
 import logger.MoveLogger;
@@ -15,11 +18,12 @@ public class ChessGame {
 	private Board board;
 	private MoveLogger logger;
 	private Model.Color currentPlayerColor;
+	private Map<Model.Color, Player> players = new HashMap<>();
 	
-	public ChessGame(Board board, MoveLogger logger, Model.Color color){
+	public ChessGame(Board board, MoveLogger logger, Model.Color startingColor){
 		this.board = board;
 		this.logger = logger;
-		this.currentPlayerColor = color;
+		this.currentPlayerColor = startingColor;
 	}
 	
 	public void takeBack(){
@@ -32,30 +36,44 @@ public class ChessGame {
 	
 	public MoveResult movePieceAndLogMove(Field startField, Field targetField) throws ImpossiblePathException, InvalidMoveException {
 		MoveResult moveResult;
+		checkMovePreconditions(startField);
+		logger.beginLogTransaction(startField, targetField);
+		movePiece(startField, targetField);
+		moveResult = checkMoveExtraResults();
+		updatePlayers(startField, targetField);
+		logger.commitLogTransaction(startField, targetField, moveResult);
+		switchPlayers();
+		return moveResult;		
+	}
+	
+	private void checkMovePreconditions(Field startField) throws InvalidMoveException {
 		if(startField.getChessPiece() == null)
 			throw new InvalidMoveException();
 		if(!startField.getChessPiece().getColor().equals(currentPlayerColor))
-			throw new InvalidMoveException();
-		logger.beginLogTransaction(startField, targetField);
-		movePiece(startField, targetField);
+			throw new InvalidMoveException();		
+	}
+	
+	private MoveResult checkMoveExtraResults() throws InvalidMoveException {
 		if(isPlayerChecked(currentPlayerColor)){
 			revertMove();
 			throw new InvalidMoveException();
 		}
 		if(isPlayerChecked(getOpponentColor())){
 			if(isPlayerMated(getOpponentColor()))
-				moveResult = MoveResult.CHECK_MATE;
+				return MoveResult.CHECK_MATE;
 			else
-				moveResult = MoveResult.CHECK;
+				return MoveResult.CHECK;
 		}
 		if(isPlayerMated(getOpponentColor()))
-			moveResult = MoveResult.MATE;
-		moveResult = MoveResult.OK;
-		logger.commitLogTransaction(startField, targetField, moveResult);
-		switchPlayers();
-		return moveResult;		
+			return MoveResult.MATE;
+		return MoveResult.OK;
 	}
-	
+
+	private void updatePlayers(Field startField, Field endField){
+		for(Map.Entry<Model.Color, Player> entry : players.entrySet())
+			entry.getValue().update(startField, endField);
+	}
+
 	private void movePiece(Field startField, Field targetField) throws ImpossiblePathException, InvalidMoveException{
 		ChessPiece movedPiece = startField.getChessPiece();
 		if(!movedPiece.isMovePossible(startField, targetField) )

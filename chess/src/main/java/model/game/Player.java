@@ -12,6 +12,11 @@ public class Player {
 	public Player(Model.Color color){
 		this.color = color;
 	}
+
+	public void update(Field startField, Field endField) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
