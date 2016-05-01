@@ -38,7 +38,19 @@ public class Board {
 	{
 		if(x<0||x>7||y<0||y>7)
 			return null;
-		return this.field[y][x];
+		Field possible = field[y][x];
+		FieldCoordinates possibleCoords = possible.getFieldCoordintes();
+		if(possibleCoords.x == x && possibleCoords.y == y){
+			return possible;
+		}
+		int invertedX = Math.abs(x-7);
+		int invertedY = Math.abs(y-7);
+		possible = field[invertedY][invertedX];
+		possibleCoords = possible.getFieldCoordintes();
+		if(possibleCoords.x == x && possibleCoords.y == y){
+			return possible;
+		}
+		return null;
 	}
 	
 	private void placeBlackPieces () 
@@ -79,7 +91,14 @@ public class Board {
 	}
 
 	public void renumberFields() {
-		// TODO Auto-generated method stub
+		for(int i = 0; i < 8; i++){
+			for( int j = 0; j < 8; j++){
+				FieldCoordinates originalCoordinates = field[i][j].getFieldCoordintes();
+				int newX = Math.abs(originalCoordinates.x-7);
+				int newY = Math.abs(originalCoordinates.y-7);
+				field[i][j].setFieldCoordinates(newX, newY);
+			}
+		}
 		
 	}
 	

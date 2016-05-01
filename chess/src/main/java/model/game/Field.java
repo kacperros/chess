@@ -5,7 +5,7 @@ import model.figures.ChessPiece;
 public class Field {
 	
 	private ChessPiece chessPiece;
-	private final FieldCoordinates fieldCoordinates;
+	private FieldCoordinates fieldCoordinates;
 	
 	public Field(int x, int y)
 	{
@@ -36,5 +36,10 @@ public class Field {
 	
 	public FieldCoordinates getFieldCoordintes(){
 		return this.fieldCoordinates;
-	}	
+	}
+	
+	public void setFieldCoordinates(int x, int y){
+		this.fieldCoordinates.x = x;
+		this.fieldCoordinates.y = y;
+	}
 }
