@@ -1,16 +1,12 @@
 package uni.chess;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import exceptions.InvalidMoveException;
 import model.Model;
 import model.figures.Bishop;
-import model.figures.ChessPiece;
 import model.figures.Queen;
 import model.figures.Rook;
 import model.game.Board;

@@ -53,6 +53,13 @@ public class Board {
 		return null;
 	}
 	
+	public Field getFieldAbsolute(int x, int y)
+	{
+		if(x<0||x>7||y<0||y>7)
+			return null;
+		return field[y][x];
+	}
+	
 	private void placeBlackPieces () 
 	{
 		this.field[0][0].setChessPiece(new Rook(Model.Color.white, this));
@@ -98,8 +105,23 @@ public class Board {
 				int newY = Math.abs(originalCoordinates.y-7);
 				field[i][j].setFieldCoordinates(newX, newY);
 			}
+		}		
+	}
+	
+	public void renumberFieldsColorBottom(Model.Color bottomColor){
+		if(Model.Color.white.equals(bottomColor)){
+			for(int i = 0; i < 8; i++){
+				for( int j = 0; j < 8; j++){
+					field[i][j].setFieldCoordinates(j, i);
+				}
+			}
+		}else{
+			for(int i = 0; i < 8; i++){
+				for( int j = 0; j < 8; j++){
+					field[i][j].setFieldCoordinates(7-j, 7-i);
+				}
+			}
 		}
-		
 	}
 	
 }

@@ -24,6 +24,7 @@ public class ChessGame {
 		this.board = board;
 		this.logger = logger;
 		this.currentPlayerColor = startingColor;
+		board.renumberFieldsColorBottom(startingColor);
 	}
 	
 	public void takeBack(){
@@ -41,7 +42,7 @@ public class ChessGame {
 		movePiece(startField, targetField);
 		moveResult = checkMoveExtraResults();
 		updatePlayers(startField, targetField);
-		logger.commitLogTransaction(startField, targetField, moveResult);
+		logger.commitLogTransaction(moveResult);
 		switchPlayers();
 		board.renumberFields();
 		return moveResult;		
