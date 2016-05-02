@@ -1,8 +1,9 @@
 package view;
 
 import java.awt.Graphics;
-
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -18,7 +19,7 @@ import model.game.Field;
  *
  */
 
-public class ViewChessman extends JPanel{
+public class ViewChessman extends JPanel implements MouseListener {
 	  
 	/**
 	 * 
@@ -26,6 +27,8 @@ public class ViewChessman extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	private Field field;
+	private int tab[];
+	private boolean checked;
 	
 	private final Image blackPawn;
 	private final Image blackRook;
@@ -45,24 +48,26 @@ public class ViewChessman extends JPanel{
 	    /**
 	     * @param pole
 	     */
-	    public ViewChessman(Field field) {
+	    public ViewChessman(Field field, int[] x, boolean checked) {
 	        this.field = field;
+	        this.tab=x;
+	        this.checked=checked;
 	        
-	        this.blackPawn = new ImageIcon("src/materials/blackPawn.png").getImage();
-	        this.blackRook = new ImageIcon("src/materials/blackRook.png").getImage();
-	        this.blackKnight = new ImageIcon("src/materials/blackKnight.png").getImage();
-	        this.blackBishop = new ImageIcon("src/materials/blackBishop.png").getImage();
-	        this.blackQueen = new ImageIcon("src/materials/blackQueen.png").getImage();
-	        this.blackKing = new ImageIcon("src/materials/blackKing.png").getImage();
+	        this.blackPawn = new ImageIcon("src/main/java/materials/blackPawn.png").getImage();
+	        this.blackRook = new ImageIcon("src/main/java/materials/blackRook.png").getImage();
+	        this.blackKnight = new ImageIcon("src/main/java/materials/blackKnight.png").getImage();
+	        this.blackBishop = new ImageIcon("src/main/java/materials/blackBishop.png").getImage();
+	        this.blackQueen = new ImageIcon("src/main/java/materials/blackQueen.png").getImage();
+	        this.blackKing = new ImageIcon("src/main/java/materials/blackKing.png").getImage();
 	    	
-	        this.whitePawn = new ImageIcon("src/materials/whitePawn.png").getImage();
-	        this.whiteRook = new ImageIcon("src/materials/whiteRook.png").getImage();
-	        this.whiteKnight = new ImageIcon("src/materials/whiteKnight.png").getImage();
-	        this.whiteBishop = new ImageIcon("src/materials/whiteBishop.png").getImage();
-	        this.whiteQueen = new ImageIcon("src/materials/whiteQueen.png").getImage();
-	        this.whiteKing = new ImageIcon("src/materials/whiteKing.png").getImage();
+	        this.whitePawn = new ImageIcon("src/main/java/materials/whitePawn.png").getImage();
+	        this.whiteRook = new ImageIcon("src/main/java/materials/whiteRook.png").getImage();
+	        this.whiteKnight = new ImageIcon("src/main/java/materials/whiteKnight.png").getImage();
+	        this.whiteBishop = new ImageIcon("src/main/java/materials/whiteBishop.png").getImage();
+	        this.whiteQueen = new ImageIcon("src/main/java/materials/whiteQueen.png").getImage();
+	        this.whiteKing = new ImageIcon("src/main/java/materials/whiteKing.png").getImage();
 	        
-	        
+	        this.addMouseListener(this);
 	    }
 
 	    @Override
@@ -144,5 +149,37 @@ public class ViewChessman extends JPanel{
 				g.drawImage(blackPawn, 17, 10, this);
 			else 
 				g.drawImage(whitePawn, 17, 10, this);			
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub	
+
+			this.tab[0] = this.field.getFieldCoordintes().getX();
+			this.tab[1] = this.field.getFieldCoordintes().getY();
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
 		}		
 }

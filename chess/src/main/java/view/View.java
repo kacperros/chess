@@ -15,12 +15,12 @@ public class View {
     /** ramka w ktorej beda wszystkie elementy */
     public JFrame frame;
 
-    public View(final Board board) {
+    public View(final Board board, int[] x, boolean checked) {
         // parametry ramki
         frame = new JFrame("Szachy");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(300, 0, 800, 800);
-        mainPanel = new ViewBoard(board);
+        mainPanel = new ViewBoard(board, x, checked);
         
         frame.add(mainPanel, BorderLayout.CENTER);
 
@@ -31,17 +31,20 @@ public class View {
     /**
      * funkcja tworzy nowy watek aby zmienic widok
      * 
-     * @param tab
-     *            - tablica na podstawie ktorej rysuje pola
+     * @param tab - tablica na podstawie ktorej rysuje pola
      */
     public void update(final Board board) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+            	
+            	frame.repaint();
+            	/*
                 frame.remove(mainPanel);
                 mainPanel = new ViewBoard(board);
                 frame.add(mainPanel);
                 frame.validate();
+                */
             }
         });
     }
