@@ -40,5 +40,13 @@ public class MoveLogger {
 		for(int i = 0; i<history.size(); i++)
 			System.out.println(history.get(i).toString());
 	}
+	
+	public LoggedMove getLastMove(){
+		return history.peek();
+	}
+	
+	public LoggedMove revertLastMove(){
+		return history.pop();
+	}
 
 }

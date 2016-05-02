@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import exceptions.InvalidMoveException;
+import logger.LoggedMove;
 import logger.MoveLogger;
 import model.Model;
 import model.figures.ChessPiece;
@@ -81,7 +82,11 @@ public class ChessGame {
 	}
 	
 	private void revertMove(){
-		
+//		LoggedMove lastMove = logger.getCurrentTransaction();
+//		Field endField = board.getFieldAbsolute(lastMove.endPosition.x, lastMove.endPosition.y);
+//		Field startField = board.getFieldAbsolute(lastMove.startPosition.x, lastMove.startPosition.y);
+//		
+	
 	}
 	
 	public boolean isPlayerChecked(Model.Color color){
@@ -93,17 +98,11 @@ public class ChessGame {
 	}
 	
 	private void switchPlayers(){
-		if(Model.Color.white.equals(currentPlayerColor))
-			currentPlayerColor = Model.Color.black;
-		else
-			currentPlayerColor = Model.Color.white;
+		currentPlayerColor = Utils.getOpposingColor(currentPlayerColor);
 	}
 	
 	private Model.Color getOpponentColor(){
-		if(currentPlayerColor.equals(Model.Color.white))
-			return Model.Color.black;
-		else
-			return Model.Color.white;
+		return Utils.getOpposingColor(currentPlayerColor);
 	}
 
 }
