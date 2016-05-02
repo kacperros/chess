@@ -75,6 +75,10 @@ public class Chess {
 	    	tab[0]=-1;
 	    	tab[1]=-1;
 	    	
+	    	System.out.println("source: ");
+	    	System.out.println(sourceX);
+	    	System.out.println(sourceY);
+	    	
 	    	while (tab[0]==-1 || tab[1]==-1)
 	    	{
 	    		view.update(game.getBoard());    		
@@ -87,15 +91,12 @@ public class Chess {
 	    	tab[0]=-1;
 	    	tab[1]=-1;
 	    	
-	    	source = game.getBoard().getFieldAbsolute(sourceX, sourceY);
-	    	destination = game.getBoard().getFieldAbsolute(destinationX, destinationY);
-	    	
-	    	System.out.println("source: ");
-	    	System.out.println(sourceX);
-	    	System.out.println(sourceY);
 	    	System.out.println("destination: ");
 	    	System.out.println(destinationX);
 	    	System.out.println(destinationY);
+	    	
+	    	source = game.getBoard().getFieldAbsolute(sourceX, sourceY);
+	    	destination = game.getBoard().getFieldAbsolute(destinationX, destinationY);
 	    	
 	    	Move move = new Move (source, destination);
 	    	
@@ -103,29 +104,30 @@ public class Chess {
 	        {
 	        	tab[i] = -1; 
 	        }
-	    	
-	    	try
-	    	{
+
+	    	try {
 	    		game.playerMove(move);
-	    	} catch (InvalidMoveException e) {
-	    		System.out.println("wyjatek od czlowieka");	
+	    	} catch (InvalidMoveException e) {	
+	    		System.out.println("wybierz ponownie");	
 	    		e.printStackTrace();
+	    		continue;
 	    	}
-	    	
+	        
 	    	view.update(game.getBoard());
 	    	sleep();
 	    	
-	     	try
-	    	{
+	     	try {
 	     		game.opponentMove();
 	    	} catch (SurrenderException e) {
-	    		System.out.println("wyjatek od komputera");	
+	    		System.out.println("Wygrales!!! GRATULACJE ;-) ");	
 				e.printStackTrace();
+				break;
 			}
 	    	
 	    	view.update(game.getBoard());	
+	     
 	    }
-	    
+	    	view.close();
 	}
 
 }
