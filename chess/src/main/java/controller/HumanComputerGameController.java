@@ -23,7 +23,7 @@ public class HumanComputerGameController {
 		board = new Board();
 		chessAlgorithm = new RandomAlgorithm();
 		humanPlayer = new Player(playerColor, board);
-		artificialOpponent = new ArtificialPlayer(getOpposingColor(playerColor), board, chessAlgorithm);
+		artificialOpponent = new ArtificialPlayer(Utils.getOpposingColor(playerColor), board, chessAlgorithm);
 		logger = new MoveLogger();
 		chessGame = new ChessGame(board, logger, playerColor, humanPlayer, artificialOpponent);
 	}
@@ -48,14 +48,7 @@ public class HumanComputerGameController {
 			}
 		}
 		throw new SurrenderException();
-	}
-
-	private Model.Color getOpposingColor(Model.Color color) {
-		if (color.equals(Model.Color.white))
-			return Model.Color.black;
-		else
-			return Model.Color.white;
-	}
+	}	
 	
 	public Board getBoard(){
 		return board;
