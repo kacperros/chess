@@ -23,8 +23,11 @@ public class ArtificialPlayer extends Player{
 		return algorithm.suggestMove(board, this, suggestedMovesThisTurn);
 	}
 	
-	public void denyMove(Move move){
-		suggestedMovesThisTurn.add(move);		
+	public boolean denyMove(Move move){
+		suggestedMovesThisTurn.add(move);
+		if(suggestedMovesThisTurn.size() > 5000)
+			return false;
+		return true;
 	}
 	
 	public void acceptMove(){

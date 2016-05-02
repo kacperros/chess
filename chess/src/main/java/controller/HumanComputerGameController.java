@@ -41,10 +41,14 @@ public class HumanComputerGameController {
 				artificialOpponent.acceptMove();
 				return result;
 			} catch (InvalidMoveException invalidMoveException){
-				artificialOpponent.denyMove(suggestedMove);
-				continue;
+				boolean gaveUp = artificialOpponent.denyMove(suggestedMove);
+				if(!gaveUp)
+					continue;
+				else
+					break;
 			}
 		}
+		throw new SurrenderException();
 	}
 
 	private Model.Color getOpposingColor(Model.Color color) {
