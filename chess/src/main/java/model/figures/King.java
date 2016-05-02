@@ -1,5 +1,6 @@
 package model.figures;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class King extends ChessPiece {
 
 	@Override
 	public boolean isMovePossible(Field pieceField, Field targetField) {
-		if(pieceField == null || targetField == null)
+		if (pieceField == null || targetField == null)
 			return false;
 		FieldCoordinates start = pieceField.getFieldCoordintes();
 		FieldCoordinates end = targetField.getFieldCoordintes();
@@ -112,6 +113,17 @@ public class King extends ChessPiece {
 		addPossibleMove(possibleFields, pieceField, 1, 0);
 		addPossibleMove(possibleFields, pieceField, 0, -1);
 		addPossibleMove(possibleFields, pieceField, 0, 1);
+		addPossibleMove(possibleFields, pieceField, -1, -1);
+		addPossibleMove(possibleFields, pieceField, 1, 1);
+		addPossibleMove(possibleFields, pieceField, 1, -1);
+		addPossibleMove(possibleFields, pieceField, -1, 1);
+		if (this.getColor().equals(Color.white)) {
+			addPossibleMove(possibleFields, pieceField, 2, 0);
+			addPossibleMove(possibleFields, pieceField, -3, 0);
+		} else {
+			addPossibleMove(possibleFields, pieceField, -2, 0);
+			addPossibleMove(possibleFields, pieceField, 3, 0);
+		}
 		return possibleFields;
 	}
 

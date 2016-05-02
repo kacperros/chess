@@ -17,25 +17,26 @@ public class RandomAlgorithm implements ChessAlgorithm {
 
 	Map<FieldCoordinates, ChessPiece> pieces;
 	Random generator = new Random();
-	List<FieldCoordinates> fields = new ArrayList<>();
+	
 
 	@Override
 	public Move suggestMove(Board board, Player player, List<Move> movesAlreadySuggested) throws SurrenderException {
 		pieces = player.showPieces();
+		List<FieldCoordinates> fields = new ArrayList<>();
 		fields.addAll(pieces.keySet());
 		int max = fields.size();
 		for (int i = max; i > 0; i--) {
-			int rand = generator.nextInt(fields.size() - 1);
+			int rand = generator.nextInt(fields.size());
 			FieldCoordinates coords = fields.get(rand);
 			Field candidateField = board.getFieldAbsolute(coords.x, coords.y);
 			ChessPiece piece = candidateField.getChessPiece();
 			List<Field> possibilities = piece.getPossibleMoves(candidateField);
 			if(possibilities.size() != 0){
-				int choice = generator.nextInt(possibilities.size() - 1);
+				int choice = generator.nextInt(possibilities.size());
 				Move suggestedMove = new Move(candidateField, possibilities.get(choice));
 				if(checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove))
 					continue;
-				else
+				else					
 					return suggestedMove;
 			} else {
 				fields.remove(rand);

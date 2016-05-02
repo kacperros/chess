@@ -37,8 +37,8 @@ public class MoveLogger {
 
 
 	public void printHistory() {
-		while(history.peek() != null)
-			System.out.println(history.pop().toString());	
+		for(int i = 0; i<history.size(); i++)
+			System.out.println(history.get(i).toString());
 	}
 
 }
