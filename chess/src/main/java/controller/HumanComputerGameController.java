@@ -42,10 +42,9 @@ public class HumanComputerGameController {
 				return result;
 			} catch (InvalidMoveException invalidMoveException){
 				boolean gaveUp = artificialOpponent.denyMove(suggestedMove);
-				if(!gaveUp)
-					continue;
-				else
+				if(gaveUp)
 					break;
+				continue;
 			}
 		}
 		throw new SurrenderException();

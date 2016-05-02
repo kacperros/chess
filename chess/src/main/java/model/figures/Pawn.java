@@ -74,9 +74,10 @@ public class Pawn extends ChessPiece {
 	@Override
 	public List<Field> getPossibleMoves(Field pieceField) {
 		List<Field> possibleFields = new ArrayList<>();
-		addPossibleMove(possibleFields, pieceField, -1, -1);
-		addPossibleMove(possibleFields, pieceField, 0, -1);
-		addPossibleMove(possibleFields, pieceField, 1, -1);
+		addPossibleMove(possibleFields, pieceField, 0, 1);
+		addPossibleMove(possibleFields, pieceField, 0, 2);
+		addPossibleMove(possibleFields, pieceField, 1, 1);
+		addPossibleMove(possibleFields, pieceField, -1, 1);
 		return possibleFields;
 	}
 
