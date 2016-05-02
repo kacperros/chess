@@ -101,6 +101,8 @@ public class Queen extends ChessPiece{
 
 	@Override
 	public boolean isMovePossible(Field pieceField, Field targetField) {
+		if(pieceField == null || targetField == null)
+			return false;
 		FieldCoordinates start = pieceField.getFieldCoordintes();
 		FieldCoordinates end = targetField.getFieldCoordintes();
 		int deltaX = end.x - start.x;

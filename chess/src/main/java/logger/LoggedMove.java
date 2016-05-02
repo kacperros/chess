@@ -11,4 +11,12 @@ public class LoggedMove {
 	public FieldCoordinates endPosition;
 	public MoveResult moveResult;
 	public Model.Name pieceKilled;
+	@Override
+	public String toString() {
+		return "LoggedMove [playerColor=" + playerColor + ", movingChessPiece=" + movingChessPiece + ", startPosition="
+				+ startPosition + ", endPosition=" + endPosition + ", moveResult=" + moveResult + ", pieceKilled="
+				+ pieceKilled + "]";
+	}
+	
+	
 }

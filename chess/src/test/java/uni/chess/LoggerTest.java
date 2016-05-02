@@ -13,8 +13,10 @@ import controller.ChessGame;
 import logger.LoggedMove;
 import logger.MoveLogger;
 import model.Model;
+import model.Model.Color;
 import model.game.Board;
 import model.game.Field;
+import model.game.Player;
 
 public class LoggerTest {
 	
@@ -26,7 +28,7 @@ public class LoggerTest {
 	public void setupBoard() {
 		board = new Board();
 		logger = new MoveLogger();
-		game = new ChessGame(board,logger, Model.Color.white);
+		game = new ChessGame(board,logger, Model.Color.white, new Player(Model.Color.white, board), new Player(Model.Color.black, board));
 	}
 	
 	@Test
@@ -42,7 +44,9 @@ public class LoggerTest {
 	
 	@Test
 	public void testProperCreationForBlack() {
-		game = new ChessGame(board, logger, Model.Color.black);
+		game = new ChessGame(board, logger, Model.Color.black, new Player(Model.Color.black, board), new Player(Model.Color.white, board));
+		
+		board.renumberFieldsColorBottom(Color.black);
 		
 		Field whiteKingField = board.getField(3, 7);
 		assertTrue(whiteKingField.getChessPiece().getName().equals(Model.Name.King));

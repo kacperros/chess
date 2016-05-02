@@ -3,7 +3,6 @@ package controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import exceptions.ImpossiblePathException;
 import exceptions.InvalidMoveException;
 import logger.MoveLogger;
 import model.Model;
@@ -20,22 +19,20 @@ public class ChessGame {
 	private Model.Color currentPlayerColor;
 	private Map<Model.Color, Player> players = new HashMap<>();
 	
-	public ChessGame(Board board, MoveLogger logger, Model.Color startingColor){
+	public ChessGame(Board board, MoveLogger logger, Model.Color humanColor, Player player, Player opponent){
 		this.board = board;
 		this.logger = logger;
-		this.currentPlayerColor = startingColor;
-		board.renumberFieldsColorBottom(startingColor);
+		this.currentPlayerColor = Model.Color.white;
+		board.renumberFieldsColorBottom(currentPlayerColor);
+		insertPlayers(player, opponent);
 	}
 	
-	public void takeBack(){
-		
+	private void insertPlayers(Player player, Player opponent) {
+		players.put(player.getColor(), player);
+		players.put(opponent.getColor(), opponent);
 	}
 	
-	public void suggest(){
-		
-	}
-	
-	public MoveResult movePieceAndLogMove(Field startField, Field targetField) throws ImpossiblePathException, InvalidMoveException {
+	public MoveResult movePieceAndLogMove(Field startField, Field targetField) throws InvalidMoveException {
 		MoveResult moveResult;
 		checkMovePreconditions(startField);
 		logger.beginLogTransaction(startField, targetField);
@@ -76,10 +73,10 @@ public class ChessGame {
 			entry.getValue().update(startField, endField);
 	}
 
-	private void movePiece(Field startField, Field targetField) throws ImpossiblePathException, InvalidMoveException{
+	private void movePiece(Field startField, Field targetField) throws InvalidMoveException{
 		ChessPiece movedPiece = startField.getChessPiece();
 		if(!movedPiece.isMovePossible(startField, targetField) )
-			throw new ImpossiblePathException();
+			throw new InvalidMoveException();
 		movedPiece.movePiece(startField, targetField);
 	}
 	

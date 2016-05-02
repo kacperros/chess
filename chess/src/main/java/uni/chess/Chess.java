@@ -33,12 +33,10 @@ public class Chess {
         	System.out.println("Zly wybor, uruchom ponownie");
         }
 		
-	    Model model = new Model();
-	    ChessGame game = new ChessGame(model.getBoard(), new MoveLogger(), Model.Color.white);
 	    
-	    View view = new View(model.getBoard());
-		
-	    view.update(model.getBoard());
+//	    View view = new View(model.getBoard());
+//		
+//	    view.update(model.getBoard());
         
 	}
 

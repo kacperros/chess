@@ -5,7 +5,6 @@ import java.util.List;
 
 import exceptions.InvalidMoveException;
 import model.Model;
-import model.Model.Color;
 import model.game.Board;
 import model.game.Field;
 import model.game.FieldCoordinates;
@@ -54,8 +53,12 @@ public class Pawn extends ChessPiece {
 
 	@Override
 	public boolean isMovePossible(Field pieceField, Field targetField) {
+		if(pieceField == null || targetField == null)
+			return false;
 		FieldCoordinates startCoordinates = pieceField.getFieldCoordintes();
 		FieldCoordinates endCoordinates = targetField.getFieldCoordintes();
+		if(pieceField == null || targetField == null)
+			return false;
 		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 1)
 			return true;
 		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 2

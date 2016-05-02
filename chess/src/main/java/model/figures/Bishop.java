@@ -29,6 +29,8 @@ public class Bishop extends ChessPiece {
 
 	@Override
 	public boolean isMovePossible(Field pieceField, Field targetField) {
+		if(pieceField == null || targetField == null)
+			return false;
 		int deltaX = targetField.getFieldCoordintes().x - pieceField.getFieldCoordintes().x;
 		int deltaY = targetField.getFieldCoordintes().y - pieceField.getFieldCoordintes().y;
 		if (Math.abs(deltaX) != Math.abs(deltaY))

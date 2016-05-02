@@ -49,4 +49,41 @@ public class Field {
 	public FieldCoordinates getPermanentCoordinates(){
 		return this.permanentCoordinates;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((chessPiece == null) ? 0 : chessPiece.hashCode());
+		result = prime * result + ((fieldCoordinates == null) ? 0 : fieldCoordinates.hashCode());
+		result = prime * result + ((permanentCoordinates == null) ? 0 : permanentCoordinates.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Field other = (Field) obj;
+		if (chessPiece == null) {
+			if (other.chessPiece != null)
+				return false;
+		} else if (!chessPiece.equals(other.chessPiece))
+			return false;
+		if (fieldCoordinates == null) {
+			if (other.fieldCoordinates != null)
+				return false;
+		} else if (!fieldCoordinates.equals(other.fieldCoordinates))
+			return false;
+		if (permanentCoordinates == null) {
+			if (other.permanentCoordinates != null)
+				return false;
+		} else if (!permanentCoordinates.equals(other.permanentCoordinates))
+			return false;
+		return true;
+	}
 }

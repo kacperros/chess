@@ -35,4 +35,10 @@ public class MoveLogger {
 		return history;
 	}
 
+
+	public void printHistory() {
+		while(history.peek() != null)
+			System.out.println(history.pop().toString());	
+	}
+
 }
