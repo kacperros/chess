@@ -1,10 +1,13 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import model.game.Board;
 
@@ -15,12 +18,13 @@ public class View {
     /** ramka w ktorej beda wszystkie elementy */
     public JFrame frame;
 
-    public View(final Board board, int[] x, boolean checked) {
+    public View(final Board board, int[] x) {
+    	
         // parametry ramki
         frame = new JFrame("Szachy");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(300, 0, 800, 800);
-        mainPanel = new ViewBoard(board, x, checked);
+        mainPanel = new ViewBoard(board, x);
         
         frame.add(mainPanel, BorderLayout.CENTER);
 

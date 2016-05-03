@@ -28,7 +28,6 @@ public class ViewChessman extends JPanel implements MouseListener {
 
 	private Field field;
 	private int tab[];
-	private boolean checked;
 	
 	private final Image blackPawn;
 	private final Image blackRook;
@@ -48,10 +47,9 @@ public class ViewChessman extends JPanel implements MouseListener {
 	    /**
 	     * @param pole
 	     */
-	    public ViewChessman(Field field, int[] x, boolean checked) {
+	    public ViewChessman(Field field, int[] x) {
 	        this.field = field;
 	        this.tab=x;
-	        this.checked=checked;
 	        
 	        this.blackPawn = new ImageIcon("src/main/java/materials/blackPawn.png").getImage();
 	        this.blackRook = new ImageIcon("src/main/java/materials/blackRook.png").getImage();
