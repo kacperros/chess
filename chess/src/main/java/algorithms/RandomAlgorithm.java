@@ -17,7 +17,6 @@ public class RandomAlgorithm implements ChessAlgorithm {
 
 	Map<FieldCoordinates, ChessPiece> pieces;
 	Random generator = new Random();
-	
 
 	@Override
 	public Move suggestMove(Board board, Player player, List<Move> movesAlreadySuggested) throws SurrenderException {
@@ -31,13 +30,18 @@ public class RandomAlgorithm implements ChessAlgorithm {
 			Field candidateField = board.getFieldAbsolute(coords.x, coords.y);
 			ChessPiece piece = candidateField.getChessPiece();
 			List<Field> possibilities = piece.getPossibleMoves(candidateField);
-			if(possibilities.size() != 0){
-				int choice = generator.nextInt(possibilities.size());
-				Move suggestedMove = new Move(candidateField, possibilities.get(choice));
-				if(checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove))
-					continue;
-				else					
-					return suggestedMove;
+			if (possibilities.size() != 0) {
+				int k = 0;
+				while (k < possibilities.size() * 3) {
+					int choice = generator.nextInt(possibilities.size());
+					Move suggestedMove = new Move(candidateField, possibilities.get(choice));
+					if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)){
+						k++;
+						continue;
+					}
+					else
+						return suggestedMove;
+				}
 			} else {
 				fields.remove(rand);
 			}
@@ -47,13 +51,13 @@ public class RandomAlgorithm implements ChessAlgorithm {
 
 	private boolean checkIfAlreadySuggested(List<Move> movesAlreadySuggested, Move suggestedMove) {
 		return movesAlreadySuggested.contains(suggestedMove);
-		
+
 	}
 
 	@Override
 	public void moveAccepted() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

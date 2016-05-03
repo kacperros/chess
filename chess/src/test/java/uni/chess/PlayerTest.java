@@ -34,25 +34,25 @@ public class PlayerTest {
 		Field startField = board.getField(4, 1);
 		Field endField = board.getField(4, 3);
 		startField.getChessPiece().movePiece(startField, endField);
-		updatePlayers(startField, endField);
+		updatePlayers();
 		board.renumberFields();
 		
 		startField = board.getField(4, 1);
 		endField = board.getField(4, 3);
 		startField.getChessPiece().movePiece(startField, endField);
-		updatePlayers(startField, endField);
+		updatePlayers();
 		board.renumberFields();
 		
 		startField = board.getField(4, 3);
 		endField = board.getField(3, 4);
 		startField.getChessPiece().movePiece(startField, endField);
-		updatePlayers(startField, endField);
+		updatePlayers();
 		board.renumberFields();
 		
 		startField = board.getField(4, 0);
 		endField = board.getField(4, 3);
 		startField.getChessPiece().movePiece(startField, endField);
-		updatePlayers(startField, endField);
+		updatePlayers();
 		board.renumberFields();
 		
 		assertTrue(board.getFieldAbsolute(4, 1).getChessPiece() == null);
@@ -75,9 +75,9 @@ public class PlayerTest {
 		assertTrue(blackPieces.get(board.getFieldAbsolute(3, 4).getFieldCoordintes()).equals(board.getFieldAbsolute(3, 4).getChessPiece()));
 	}
 	
-	private void updatePlayers(Field startField, Field endField){
-		playerWhite.update(startField, endField);
-		playerBlack.update(startField, endField);
+	private void updatePlayers(){
+		playerWhite.update();
+		playerBlack.update();
 	}
 
 }

@@ -57,14 +57,14 @@ public class Chess {
 			
 			if (timer1)
 			{
-				System.out.println("CZAS ROZGRYWKI");
-				System.out.println( (System.currentTimeMillis() - startTime)/1000 );
+				//System.out.println("CZAS ROZGRYWKI");
+				//System.out.println( (System.currentTimeMillis() - startTime)/1000 );
 			}
 			
 			if (timer2)
 			{
-				System.out.println("CZAS TURY");
-				System.out.println( (System.currentTimeMillis() - roundTime)/1000 );
+				//System.out.println("CZAS TURY");
+			//	System.out.println( (System.currentTimeMillis() - roundTime)/1000 );
 			}
 		}
 	});

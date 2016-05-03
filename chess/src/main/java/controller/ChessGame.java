@@ -10,6 +10,7 @@ import model.Model;
 import model.figures.ChessPiece;
 import model.game.Board;
 import model.game.Field;
+import model.game.FieldCoordinates;
 import model.game.MoveResult;
 import model.game.Player;
 
@@ -35,27 +36,30 @@ public class ChessGame {
 	
 	public MoveResult movePieceAndLogMove(Field startField, Field targetField) throws InvalidMoveException {
 		MoveResult moveResult;
-		checkMovePreconditions(startField);
+		checkMovePreconditions(startField, targetField);
 		logger.beginLogTransaction(startField, targetField);
 		movePiece(startField, targetField);
+		updatePlayers();
 		moveResult = checkMoveExtraResults();
-		updatePlayers(startField, targetField);
 		logger.commitLogTransaction(moveResult);
 		switchPlayers();
 		board.renumberFields();
 		return moveResult;		
 	}
 	
-	private void checkMovePreconditions(Field startField) throws InvalidMoveException {
+	private void checkMovePreconditions(Field startField, Field endField) throws InvalidMoveException {
 		if(startField.getChessPiece() == null)
 			throw new InvalidMoveException();
 		if(!startField.getChessPiece().getColor().equals(currentPlayerColor))
-			throw new InvalidMoveException();		
+			throw new InvalidMoveException();
+		if(startField.equals(endField))
+			throw new InvalidMoveException();
 	}
 	
 	private MoveResult checkMoveExtraResults() throws InvalidMoveException {
 		if(isPlayerChecked(currentPlayerColor)){
 			revertMove();
+			updatePlayers();
 			throw new InvalidMoveException();
 		}
 		if(isPlayerChecked(getOpponentColor())){
@@ -69,9 +73,9 @@ public class ChessGame {
 		return MoveResult.OK;
 	}
 
-	private void updatePlayers(Field startField, Field endField){
+	private void updatePlayers(){
 		for(Map.Entry<Model.Color, Player> entry : players.entrySet())
-			entry.getValue().update(startField, endField);
+			entry.getValue().update();
 	}
 
 	private void movePiece(Field startField, Field targetField) throws InvalidMoveException{
@@ -82,14 +86,32 @@ public class ChessGame {
 	}
 	
 	private void revertMove(){
-//		LoggedMove lastMove = logger.getCurrentTransaction();
-//		Field endField = board.getFieldAbsolute(lastMove.endPosition.x, lastMove.endPosition.y);
-//		Field startField = board.getFieldAbsolute(lastMove.startPosition.x, lastMove.startPosition.y);
-//		
-	
+		LoggedMove lastMove = logger.getCurrentTransaction();
+		Field endField = board.getFieldAbsolute(lastMove.endPosition.x, lastMove.endPosition.y);
+		Field startField = board.getFieldAbsolute(lastMove.startPosition.x, lastMove.startPosition.y);
+		ChessPiece movedPiece = Utils.createChessPiece(lastMove.playerColor, lastMove.movingChessPiece, board);
+		ChessPiece killedPiece = Utils.createChessPiece(Utils.getOpposingColor(lastMove.playerColor), lastMove.pieceKilled, board);
+		startField.setChessPiece(movedPiece);
+		endField.setChessPiece(killedPiece);	
 	}
 	
 	public boolean isPlayerChecked(Model.Color color){
+		board.renumberFieldsColorBottom(Utils.getOpposingColor(color));
+		Player checkedPlayer = players.get(color);
+		Field checkedKingField = checkedPlayer.getKingField();
+		Player checkingPlayer = players.get(Utils.getOpposingColor(color));
+		Map<FieldCoordinates, ChessPiece> pieces = checkingPlayer.showPieces();
+		for(Map.Entry<FieldCoordinates, ChessPiece> entry : pieces.entrySet()){
+			ChessPiece piece = entry.getValue();
+			Field pieceField = board.getFieldAbsolute(entry.getKey().x, entry.getKey().y);
+			if(piece.isMovePossible(pieceField, checkedKingField)){
+				System.out.println("Player "+ color + " checked");
+				board.renumberFieldsColorBottom(currentPlayerColor);
+				return true;	
+			}
+						
+		}
+		board.renumberFieldsColorBottom(currentPlayerColor);
 		return false;
 	}
 	
