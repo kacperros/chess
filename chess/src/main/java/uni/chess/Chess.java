@@ -26,6 +26,9 @@ public class Chess {
 	static long startTime = 0;
 	static long roundTime = 0;
 	
+	static long generalViewTime = 0;
+	static long roundViewTime = 0;
+	
 	static Timer timer = new Timer(1000, new ActionListener()
 	{
 		public void actionPerformed(ActionEvent e)
@@ -57,14 +60,16 @@ public class Chess {
 			
 			if (timer1)
 			{
+				generalViewTime = (System.currentTimeMillis() - startTime) / 1000;
 				System.out.println("CZAS ROZGRYWKI");
-				System.out.println( (System.currentTimeMillis() - startTime)/1000 );
+				System.out.println( generalViewTime );
 			}
 			
 			if (timer2)
 			{
+				roundViewTime = (System.currentTimeMillis() - roundTime)/1000;
 				System.out.println("CZAS TURY");
-				System.out.println( (System.currentTimeMillis() - roundTime)/1000 );
+				System.out.println( roundViewTime );
 			}
 		}
 	});
