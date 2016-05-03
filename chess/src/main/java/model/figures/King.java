@@ -37,7 +37,7 @@ public class King extends ChessPiece {
 		if (targetField.getChessPiece() != null && targetField.getChessPiece().getColor().equals(this.getColor()))
 			throw new InvalidMoveException();
 		wasMoved = true;
-		targetField.removeChessPiece();
+		pieceField.removeChessPiece();
 		targetField.setChessPiece(this);
 	}
 
