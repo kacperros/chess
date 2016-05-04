@@ -37,6 +37,16 @@ private Board board;
 		assertTrue(targetField.getChessPiece() != null);
 	}
 	
+	@Test
+	public void moveDiagonal() throws Exception {
+		Field kingField = board.getField(4, 0);
+		Field targetField = board.getField(5, 1);
+		ChessPiece king = kingField.getChessPiece();
+		king.movePiece(kingField, targetField);
+		
+		assertTrue(targetField.getChessPiece() != null && kingField.getChessPiece() == null);
+	}
+	
 	@Test(expected = InvalidMoveException.class)
 	public void moveKing_KillNotAllowed() throws Exception{
 		board.getField(3, 0).setChessPiece(new Rook(Model.Color.white, board));
