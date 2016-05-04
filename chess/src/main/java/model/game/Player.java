@@ -5,6 +5,7 @@ import java.util.Map;
 
 import model.Model;
 import model.Model.Color;
+import model.Model.Name;
 import model.figures.Bishop;
 import model.figures.ChessPiece;
 import model.figures.King;
@@ -61,17 +62,16 @@ public class Player {
 		}
 	}
 
-	public void update(Field startField, Field endField) {
-		FieldCoordinates coordinates = startField.getPermanentCoordinates();
-		ChessPiece piece = pieces.get(coordinates);
-		if(piece != null)
-			pieces.remove(coordinates);
-		coordinates = endField.getPermanentCoordinates();
-		piece = pieces.get(coordinates);
-		if(piece!=null)
-			pieces.remove(coordinates);
-		if(piece==null && endField.getChessPiece() != null && endField.getChessPiece().getColor().equals(color))
-			pieces.put(coordinates, endField.getChessPiece());		
+	public void update() {
+		pieces.clear();
+		for(int x = 0; x <= 7; x++){
+			for(int y = 0; y <= 7; y++){
+				Field updatedField = board.getFieldAbsolute(x, y);
+				if(updatedField.getChessPiece() != null &&
+						updatedField.getChessPiece().getColor().equals(color))
+					pieces.put(updatedField.getPermanentCoordinates(), updatedField.getChessPiece());
+			}
+		}
 	}
 	
 	public Map<FieldCoordinates, ChessPiece> showPieces(){
@@ -80,6 +80,17 @@ public class Player {
 	
 	public Color getColor(){
 		return color;
+	}
+
+	public Field getKingField() {
+		FieldCoordinates kingCoords = null;
+		for(Map.Entry<FieldCoordinates, ChessPiece> entry : pieces.entrySet()){
+			if(entry.getValue().getName().equals(Name.King)){
+				kingCoords = entry.getKey();
+				break;
+			}				
+		}
+		return board.getFieldAbsolute(kingCoords.x, kingCoords.y);
 	}
 	
 }
