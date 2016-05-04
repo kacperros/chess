@@ -8,7 +8,6 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import model.*;
 import model.Model.Color;
 import model.Model.Name;
 import model.figures.ChessPiece;
@@ -42,8 +41,9 @@ public class ViewChessman extends JPanel implements MouseListener {
 	private final Image whiteBishop;
 	private final Image whiteQueen;
 	private final Image whiteKing;
-
-
+	
+	int x;
+	int y;
 	    /**
 	     * @param pole
 	     */
@@ -64,6 +64,9 @@ public class ViewChessman extends JPanel implements MouseListener {
 	        this.whiteBishop = new ImageIcon("src/main/java/materials/whiteBishop.png").getImage();
 	        this.whiteQueen = new ImageIcon("src/main/java/materials/whiteQueen.png").getImage();
 	        this.whiteKing = new ImageIcon("src/main/java/materials/whiteKing.png").getImage();
+	        
+	        this.x = 17;
+	        this.y = 10;
 	        
 	        this.addMouseListener(this);
 	    }
@@ -109,44 +112,44 @@ public class ViewChessman extends JPanel implements MouseListener {
 
 		private void paintKing(Color color, Graphics g) {
 			if(color.equals(Color.black))
-				g.drawImage(blackKing, 17, 10, this);
+				g.drawImage(blackKing, x, y, this);
 			else
-				g.drawImage(whiteKing, 17, 10, this);			
+				g.drawImage(whiteKing, x, y, this);			
 		}
 
 		private void paintQueen(Color color, Graphics g) {
 			if(color.equals(Color.black))
-				g.drawImage(blackQueen, 17, 10, this);
+				g.drawImage(blackQueen, x, y, this);
 			else
-				g.drawImage(whiteQueen, 17, 10, this);
+				g.drawImage(whiteQueen, x, y, this);
 		}
 
 		private void paintBishop(Color color, Graphics g) {
 			if(color.equals(Color.black))
-				g.drawImage(blackBishop, 17, 10, this);
+				g.drawImage(blackBishop, x, y, this);
 			else
-				g.drawImage(whiteBishop, 17, 10, this);
+				g.drawImage(whiteBishop, x, y, this);
 		}
 
 		private void paintKnight(Color color, Graphics g) {
 			if(color.equals(Color.black))
-				g.drawImage(blackKnight, 17, 10, this);
+				g.drawImage(blackKnight, x, y, this);
 			else
-				g.drawImage(whiteKnight, 17, 10, this);
+				g.drawImage(whiteKnight, x, y, this);
 		}
 
 		private void paintRook(Color color, Graphics g) {
 			if(color.equals(Color.black))
-				g.drawImage(blackRook, 17, 10, this);
+				g.drawImage(blackRook, x+1, y, this);
 			else
-				g.drawImage(whiteRook, 17, 10, this);
+				g.drawImage(whiteRook, x+1, y, this);
 		}
 
 		private void paintPawn(Color color, Graphics g) {
 			if(color.equals(Color.black))
-				g.drawImage(blackPawn, 17, 10, this);
+				g.drawImage(blackPawn, x+2, y, this);
 			else 
-				g.drawImage(whitePawn, 17, 10, this);			
+				g.drawImage(whitePawn, x+2, y, this);			
 		}
 
 		@Override
