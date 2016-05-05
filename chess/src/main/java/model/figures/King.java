@@ -99,7 +99,7 @@ public class King extends ChessPiece {
 		}
 		int deltaX = Math.abs(end.x - start.x);
 		int deltaY = Math.abs(end.y - start.y);
-		if (!((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1)))
+		if (!((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1) ))
 			return false;
 		if (targetField.getChessPiece() != null && targetField.getChessPiece().getColor().equals(this.getColor()))
 			return false;
