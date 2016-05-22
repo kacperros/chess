@@ -19,9 +19,9 @@ public class HumanComputerGameController {
 	private ChessAlgorithm chessAlgorithm;
 	private MoveLogger logger;
 
-	public HumanComputerGameController(Model.Color playerColor) {
+	public HumanComputerGameController(Model.Color playerColor, ChessAlgorithm chosenChessAlgorithm) {
 		board = new Board();
-		chessAlgorithm = new RandomAlgorithm();
+		chessAlgorithm = chosenChessAlgorithm;
 		humanPlayer = new Player(playerColor, board);
 		artificialOpponent = new ArtificialPlayer(Utils.getOpposingColor(playerColor), board, chessAlgorithm);
 		logger = new MoveLogger();

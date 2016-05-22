@@ -1,5 +1,8 @@
 package uni.chess;
 import java.util.Scanner;
+
+import algorithms.MinMaxAlgorithm;
+import algorithms.RandomAlgorithm;
 import controller.HumanVsRandom;
 import controller.HumanComputerGameController;
 import view.View;
@@ -17,8 +20,7 @@ public class Chess {
         if(decision.equals("1")){
 
         } else if(decision.equals("2")){
-
-        } else if (decision.equals("3")){
+        	
         	read.close();
             
             int coords[] = new int[2];
@@ -30,7 +32,28 @@ public class Chess {
             
             long times [] = new long[2];	
             
-            HumanComputerGameController game = new HumanComputerGameController(Model.Color.white);
+            HumanComputerGameController game = new HumanComputerGameController(Model.Color.white, new MinMaxAlgorithm());
+    	    
+    	    View view = new View(game.getBoard(), coords, times);
+    	    
+    	    HumanVsRandom human = new HumanVsRandom(game, view, coords, times);
+    	    
+    	    human.play();
+
+        } else if (decision.equals("3")){
+        	
+        	read.close();
+            
+            int coords[] = new int[2];
+            
+            for (int i=0;i<2;++i)
+            {
+            	coords[i] = -1; 
+            }
+            
+            long times [] = new long[2];	
+            
+            HumanComputerGameController game = new HumanComputerGameController(Model.Color.white, new RandomAlgorithm());
     	    
     	    View view = new View(game.getBoard(), coords, times);
     	    

@@ -13,6 +13,8 @@ import model.game.FieldCoordinates;
  * Wieża
  * */
 public class Rook extends ChessPiece {
+	
+	private final int value = 5;
 
 	public Rook(Model.Color color, Board board) {
 		super(color, Model.Name.Rook, board);
@@ -97,4 +99,8 @@ public class Rook extends ChessPiece {
 		}
 		return result;
 	}	
+	
+	public int getValue(){
+		return value;
+	}
 }

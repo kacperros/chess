@@ -5,10 +5,17 @@ import model.game.Field;
 public class Move {
 	public final Field startField;
 	public final Field endField;
+	public final int moveValue;
 	
 	public Move(Field startField, Field endField){
 		this.startField = startField;
 		this.endField = endField;
+		
+		if(endField.getChessPiece()!=null){
+			moveValue = endField.getChessPiece().getValue();
+		} else {
+			moveValue = 0;
+		}
 	}
 
 	@Override

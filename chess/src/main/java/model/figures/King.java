@@ -133,4 +133,9 @@ public class King extends ChessPiece {
 			possibleFields.add(board.getField(fieldCoordinates.x + moveX, fieldCoordinates.y + moveY));
 	}
 
+	@Override
+	public int getValue() {
+		return 0;
+	}
+
 }

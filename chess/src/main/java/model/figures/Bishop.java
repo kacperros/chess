@@ -12,6 +12,8 @@ import model.game.Field;
  * Goniec
  */
 public class Bishop extends ChessPiece {
+	
+	private final int value = 3;
 
 	public Bishop(Model.Color color, Board board) {
 		super(color, Model.Name.Bishop, board);
@@ -77,6 +79,10 @@ public class Bishop extends ChessPiece {
 			y = y + dy;
 		}
 		return result;
+	}
+	
+	public int getValue(){
+		return value;
 	}
 
 }

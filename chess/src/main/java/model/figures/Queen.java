@@ -14,6 +14,8 @@ import model.game.FieldCoordinates;
  * */
 
 public class Queen extends ChessPiece{
+	
+	private final int value = 9;
 
 	public Queen(Model.Color color, Board board) {
 		super(color, Model.Name.Queen, board);
@@ -143,5 +145,7 @@ public class Queen extends ChessPiece{
 		return result;
 	}
 
-
+	public int getValue(){
+		return value;
+	}
 }

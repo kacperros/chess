@@ -14,6 +14,8 @@ import model.game.FieldCoordinates;
  */
 public class Knight extends ChessPiece {
 
+	private final int value = 3;
+	
 	public Knight(Model.Color color, Board board) {
 		super(color, Model.Name.Knight, board);
 	}
@@ -61,4 +63,7 @@ public class Knight extends ChessPiece {
 			possibleFields.add(board.getField(fieldCoordinates.x + moveX, fieldCoordinates.y + moveY));
 	}
 
+	public int getValue(){
+		return value;
+	}
 }

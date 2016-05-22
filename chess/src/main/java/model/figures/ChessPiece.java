@@ -44,6 +44,8 @@ public abstract class ChessPiece {
 	public abstract boolean isMovePossible(Field pieceField, Field targetField);
 	
 	public abstract List<Field> getPossibleMoves(Field pieceField);
+	
+	public abstract int getValue();
 
 	@Override
 	public int hashCode() {

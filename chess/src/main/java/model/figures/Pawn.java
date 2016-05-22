@@ -13,6 +13,8 @@ import model.game.FieldCoordinates;
  * Pionek
  */
 public class Pawn extends ChessPiece {
+	
+	private final int value = 1;
 
 	public Pawn(Model.Color color, Board board) {
 		super(color, Model.Name.Pawn, board);
@@ -85,5 +87,9 @@ public class Pawn extends ChessPiece {
 		FieldCoordinates fieldCoordinates = pieceField.getFieldCoordintes();
 		if (isMovePossible(pieceField, board.getField(fieldCoordinates.x + moveX, fieldCoordinates.y + moveY)))
 			possibleFields.add(board.getField(fieldCoordinates.x + moveX, fieldCoordinates.y + moveY));
+	}
+	
+	public int getValue(){
+		return value;
 	}
 }
