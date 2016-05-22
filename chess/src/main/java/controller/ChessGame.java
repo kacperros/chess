@@ -108,8 +108,7 @@ public class ChessGame {
 				System.out.println("Player "+ color + " checked");
 				board.renumberFieldsColorBottom(currentPlayerColor);
 				return true;	
-			}
-						
+			}						
 		}
 		board.renumberFieldsColorBottom(currentPlayerColor);
 		return false;

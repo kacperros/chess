@@ -1,7 +1,6 @@
 package controller;
 
 import algorithms.ChessAlgorithm;
-import algorithms.RandomAlgorithm;
 import exceptions.InvalidMoveException;
 import exceptions.SurrenderException;
 import logger.MoveLogger;
@@ -23,38 +22,39 @@ public class HumanComputerGameController {
 		board = new Board();
 		chessAlgorithm = chosenChessAlgorithm;
 		humanPlayer = new Player(playerColor, board);
-		artificialOpponent = new ArtificialPlayer(Utils.getOpposingColor(playerColor), board, chessAlgorithm);
+		artificialOpponent = new ArtificialPlayer(Utils.getOpposingColor(playerColor), board, humanPlayer,
+				chessAlgorithm);
 		logger = new MoveLogger();
 		chessGame = new ChessGame(board, logger, playerColor, humanPlayer, artificialOpponent);
 	}
-	
+
 	public MoveResult playerMove(Move move) throws InvalidMoveException {
 		return chessGame.movePieceAndLogMove(move.startField, move.endField);
 	}
-	
-	public MoveResult opponentMove() throws SurrenderException {		
+
+	public MoveResult opponentMove() throws SurrenderException {
 		Move suggestedMove = null;
-		while(true){
-			try{
+		while (true) {
+			try {
 				suggestedMove = artificialOpponent.move();
 				MoveResult result = chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
 				artificialOpponent.acceptMove();
 				return result;
-			} catch (InvalidMoveException invalidMoveException){
+			} catch (InvalidMoveException invalidMoveException) {
 				boolean gaveUp = artificialOpponent.denyMove(suggestedMove);
-				if(gaveUp)
+				if (gaveUp)
 					break;
 				continue;
 			}
 		}
 		throw new SurrenderException();
-	}	
-	
-	public Board getBoard(){
+	}
+
+	public Board getBoard() {
 		return board;
 	}
-	
-	public void printLoggerHistory(){
+
+	public void printLoggerHistory() {
 		logger.printHistory();
 	}
 

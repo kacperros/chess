@@ -19,7 +19,7 @@ public class RandomAlgorithm implements ChessAlgorithm {
 	Random generator = new Random();
 
 	@Override
-	public Move suggestMove(Board board, Player player, List<Move> movesAlreadySuggested) throws SurrenderException {
+	public Move suggestMove(Board board, Player player, Player opponent, List<Move> movesAlreadySuggested) throws SurrenderException {
 		pieces = player.showPieces();
 		List<FieldCoordinates> fields = new ArrayList<>();
 		fields.addAll(pieces.keySet());

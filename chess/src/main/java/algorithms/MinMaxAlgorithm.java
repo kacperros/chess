@@ -19,7 +19,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 	Random generator = new Random();
 
 	@Override
-	public Move suggestMove(Board board, Player player, List<Move> movesAlreadySuggested) throws SurrenderException {
+	public Move suggestMove(Board board, Player player, Player opponent, List<Move> movesAlreadySuggested) throws SurrenderException {
 		Move pickedMove = null;
 		pieces = player.showPieces();
 		List<FieldCoordinates> listOfFieldCoordinates = new ArrayList<>();

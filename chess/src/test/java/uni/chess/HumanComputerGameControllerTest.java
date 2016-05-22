@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import algorithms.RandomAlgorithm;
 import controller.HumanComputerGameController;
 import model.Model.Color;
 import model.Move;
@@ -32,7 +33,7 @@ public class HumanComputerGameControllerTest {
 	
 	@Before
 	public void initController(){
-		controller = new HumanComputerGameController(Color.white);
+		controller = new HumanComputerGameController(Color.white, new RandomAlgorithm());
 		board = controller.getBoard();
 	}
 	

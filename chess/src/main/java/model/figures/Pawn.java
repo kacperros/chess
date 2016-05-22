@@ -59,12 +59,10 @@ public class Pawn extends ChessPiece {
 			return false;
 		FieldCoordinates startCoordinates = pieceField.getFieldCoordintes();
 		FieldCoordinates endCoordinates = targetField.getFieldCoordintes();
-		if(pieceField == null || targetField == null)
-			return false;
-		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 1)
+		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 1 && targetField.getChessPiece() == null)
 			return true;
 		if (startCoordinates.x == endCoordinates.x && startCoordinates.y == endCoordinates.y - 2
-				&& startCoordinates.y == 1) {
+				&& startCoordinates.y == 1 && targetField.getChessPiece() == null) {
 			return true;
 		}
 		if (Math.abs(startCoordinates.x - endCoordinates.x) == 1 && startCoordinates.y == endCoordinates.y - 1
