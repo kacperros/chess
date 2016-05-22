@@ -40,7 +40,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 			}
 		}
 
-		if(pickedMove.moveValue != 0){
+		if(pickedMove != null && pickedMove.moveValue != 0){
 			return pickedMove;
 		} else {
 			movesAlreadySuggested.clear();
