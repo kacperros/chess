@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import algorithms.ChessAlgorithm;
@@ -11,21 +10,23 @@ import model.game.Board;
 import model.game.Player;
 
 public class ArtificialPlayer extends Player{
-	private final ChessAlgorithm algorithm;
-	private List<Move> suggestedMovesThisTurn = new ArrayList<>();
-	private final Player opponent;
-
-	public ArtificialPlayer(Color color, Board board, Player opponent, ChessAlgorithm chessAlgorithm) {
+	private ChessAlgorithm algorithm;
+	
+	public ArtificialPlayer(Color color, Board board) {
 		super(color, board);
-		this.algorithm = chessAlgorithm;
-		this.opponent = opponent;
 	}
 	
+	public void setChessAlgorithm(ChessAlgorithm algorithm){
+		this.algorithm = algorithm;
+	}
+	
+	
 	public Move move() throws SurrenderException{
-		return algorithm.suggestMove(board, this, opponent, suggestedMovesThisTurn);
+		return algorithm.suggestMove();
 	}
 	
 	public boolean denyMove(Move move){
+		List<Move> suggestedMovesThisTurn = algorithm.getSuggestedMovesThisTurn();
 		suggestedMovesThisTurn.add(move);
 		if(suggestedMovesThisTurn.size() > 5000)
 			return true;
@@ -33,7 +34,7 @@ public class ArtificialPlayer extends Player{
 	}
 	
 	public void acceptMove(){
-		suggestedMovesThisTurn.clear();
+		algorithm.moveAccepted();
 	}
 
 }

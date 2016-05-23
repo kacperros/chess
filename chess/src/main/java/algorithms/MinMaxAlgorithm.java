@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import controller.ChessGame;
 import exceptions.SurrenderException;
 import model.Move;
 import model.figures.ChessPiece;
@@ -15,11 +16,23 @@ import model.game.Player;
 
 public class MinMaxAlgorithm implements ChessAlgorithm {
 
-	Map<FieldCoordinates, ChessPiece> pieces;
-	Random generator = new Random();
+	private Map<FieldCoordinates, ChessPiece> pieces;
+	private final Random generator = new Random();
+	private final Board board;
+	private final Player player;
+	private final Player opponent;
+	private final List<Move> movesAlreadySuggested = new ArrayList<>();
+	private final ChessGame chessGame;
+	
+	public MinMaxAlgorithm(Board board, Player player, Player opponent, ChessGame chessgame){
+		this.board = board;
+		this.player = player;
+		this.opponent = opponent;
+		this.chessGame = chessgame;
+	}
 
 	@Override
-	public Move suggestMove(Board board, Player player, Player opponent, List<Move> movesAlreadySuggested) throws SurrenderException {
+	public Move suggestMove() throws SurrenderException {
 		Move pickedMove = null;
 		pieces = player.showPieces();
 		List<FieldCoordinates> listOfFieldCoordinates = new ArrayList<>();
@@ -78,8 +91,12 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 
 	@Override
 	public void moveAccepted() {
-		// TODO Auto-generated method stub
+		movesAlreadySuggested.clear();
 
 	}
 
+	@Override
+	public List<Move> getSuggestedMovesThisTurn() {
+		return movesAlreadySuggested;		
+	}
 }

@@ -1,6 +1,6 @@
 package controller;
 
-import algorithms.ChessAlgorithm;
+import algorithms.AlgorithmFactory;
 import exceptions.InvalidMoveException;
 import exceptions.SurrenderException;
 import logger.MoveLogger;
@@ -15,19 +15,28 @@ public class HumanComputerGameController {
 	private ChessGame chessGame;
 	private Player humanPlayer;
 	private ArtificialPlayer artificialOpponent;
-	private ChessAlgorithm chessAlgorithm;
 	private MoveLogger logger;
+	private AlgorithmFactory algorithmFactory;
 
-	public HumanComputerGameController(Model.Color playerColor, ChessAlgorithm chosenChessAlgorithm) {
+	public HumanComputerGameController(Model.Color playerColor) {
+		
 		board = new Board();
-		chessAlgorithm = chosenChessAlgorithm;
 		humanPlayer = new Player(playerColor, board);
-		artificialOpponent = new ArtificialPlayer(Utils.getOpposingColor(playerColor), board, humanPlayer,
-				chessAlgorithm);
+		artificialOpponent = new ArtificialPlayer(Utils.getOpposingColor(playerColor), board);
 		logger = new MoveLogger();
 		chessGame = new ChessGame(board, logger, playerColor, humanPlayer, artificialOpponent);
+		algorithmFactory = new AlgorithmFactory(board, humanPlayer, artificialOpponent, chessGame);
+		setControllerToRandom();
+	}
+	
+	public void setControllerToRandom() {
+		artificialOpponent.setChessAlgorithm(algorithmFactory.getRandomAlgorithmInstance());
 	}
 
+	public void setControllerToMinMax() {
+		artificialOpponent.setChessAlgorithm(algorithmFactory.getMinMaxInstance());
+	}
+	
 	public MoveResult playerMove(Move move) throws InvalidMoveException {
 		return chessGame.movePieceAndLogMove(move.startField, move.endField);
 	}

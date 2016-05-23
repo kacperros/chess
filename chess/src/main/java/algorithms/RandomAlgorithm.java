@@ -15,11 +15,19 @@ import model.game.Player;
 
 public class RandomAlgorithm implements ChessAlgorithm {
 
-	Map<FieldCoordinates, ChessPiece> pieces;
-	Random generator = new Random();
+	private Map<FieldCoordinates, ChessPiece> pieces;
+	private final Random generator = new Random();
+	private final Board board;
+	private final Player player;
+	private final List<Move> movesAlreadySuggested = new ArrayList<>();
+
+	public RandomAlgorithm(Board board, Player player) {
+		this.board = board;
+		this.player = player;
+	}
 
 	@Override
-	public Move suggestMove(Board board, Player player, Player opponent, List<Move> movesAlreadySuggested) throws SurrenderException {
+	public Move suggestMove() throws SurrenderException {
 		pieces = player.showPieces();
 		List<FieldCoordinates> fields = new ArrayList<>();
 		fields.addAll(pieces.keySet());
@@ -35,11 +43,10 @@ public class RandomAlgorithm implements ChessAlgorithm {
 				while (k < possibilities.size() * 3) {
 					int choice = generator.nextInt(possibilities.size());
 					Move suggestedMove = new Move(candidateField, possibilities.get(choice));
-					if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)){
+					if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)) {
 						k++;
 						continue;
-					}
-					else
+					} else
 						return suggestedMove;
 				}
 			} else {
@@ -56,8 +63,12 @@ public class RandomAlgorithm implements ChessAlgorithm {
 
 	@Override
 	public void moveAccepted() {
-		// TODO Auto-generated method stub
+		movesAlreadySuggested.clear();
+	}
 
+	@Override
+	public List<Move> getSuggestedMovesThisTurn() {
+		return movesAlreadySuggested;
 	}
 
 }
