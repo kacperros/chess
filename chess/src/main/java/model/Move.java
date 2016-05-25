@@ -5,7 +5,7 @@ import model.game.Field;
 public class Move {
 	public final Field startField;
 	public final Field endField;
-	public final int moveValue;
+	public int moveValue;
 	
 	public Move(Field startField, Field endField){
 		this.startField = startField;

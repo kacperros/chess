@@ -78,14 +78,23 @@ public class ChessGame {
 			entry.getValue().update();
 	}
 
-	private void movePiece(Field startField, Field targetField) throws InvalidMoveException{
+	public void movePiece(Field startField, Field targetField) throws InvalidMoveException{
 		ChessPiece movedPiece = startField.getChessPiece();
 		if(!movedPiece.isMovePossible(startField, targetField) )
 			throw new InvalidMoveException();
 		movedPiece.movePiece(startField, targetField);
 	}
 	
-	private void revertMove(){
+	public void performMove(Field startField, Field targetField) throws InvalidMoveException {
+		MoveResult moveResult;
+		//checkMovePreconditions(startField, targetField);
+		logger.beginLogTransaction(startField, targetField);
+		movePiece(startField, targetField);
+		moveResult = checkMoveExtraResults();
+		logger.commitLogTransaction(moveResult);
+	}
+	
+	public void revertMove(){
 		LoggedMove lastMove = logger.getCurrentTransaction();
 		Field endField = board.getFieldAbsolute(lastMove.endPosition.x, lastMove.endPosition.y);
 		Field startField = board.getFieldAbsolute(lastMove.startPosition.x, lastMove.startPosition.y);
