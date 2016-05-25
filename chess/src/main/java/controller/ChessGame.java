@@ -58,7 +58,7 @@ public class ChessGame {
 	
 	private MoveResult checkMoveExtraResults() throws InvalidMoveException {
 		if(isPlayerChecked(currentPlayerColor)){
-			revertMove();
+			revertUncommitedMove();
 			updatePlayers();
 			throw new InvalidMoveException();
 		}
@@ -85,16 +85,7 @@ public class ChessGame {
 		movedPiece.movePiece(startField, targetField);
 	}
 	
-	public void performMove(Field startField, Field targetField) throws InvalidMoveException {
-		MoveResult moveResult;
-		//checkMovePreconditions(startField, targetField);
-		logger.beginLogTransaction(startField, targetField);
-		movePiece(startField, targetField);
-		moveResult = checkMoveExtraResults();
-		logger.commitLogTransaction(moveResult);
-	}
-	
-	public void revertMove(){
+	private void revertUncommitedMove(){
 		LoggedMove lastMove = logger.getCurrentTransaction();
 		Field endField = board.getFieldAbsolute(lastMove.endPosition.x, lastMove.endPosition.y);
 		Field startField = board.getFieldAbsolute(lastMove.startPosition.x, lastMove.startPosition.y);
@@ -102,6 +93,13 @@ public class ChessGame {
 		ChessPiece killedPiece = Utils.createChessPiece(Utils.getOpposingColor(lastMove.playerColor), lastMove.pieceKilled, board);
 		startField.setChessPiece(movedPiece);
 		endField.setChessPiece(killedPiece);	
+	}
+	
+	public void revertMove(){
+		revertUncommitedMove();
+		updatePlayers();
+		board.renumberFields();
+		switchPlayers();
 	}
 	
 	public boolean isPlayerChecked(Model.Color color){
