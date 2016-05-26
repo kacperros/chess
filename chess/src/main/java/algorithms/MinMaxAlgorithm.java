@@ -28,7 +28,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 	private final Player opponent;
 	private final List<Move> movesAlreadySuggested = new ArrayList<>();
 	private final ChessGame chessGame;
-	private final int depth = 3;
+	private int depth = 2;
 
 	public MinMaxAlgorithm(Board board, Player player, Player opponent, ChessGame chessgame) {
 		this.board = board;
@@ -39,8 +39,13 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 
 	@Override
 	public Move suggestMove() throws SurrenderException {
+		depth = depth - 1;
 		Move pickedMove = null;
-		pieces = player.showPieces();
+		if (depth % 2 == 0) {
+			pieces = opponent.showPieces();
+		} else {
+			pieces = player.showPieces();
+		}
 		List<FieldCoordinates> listOfFieldCoordinates = new ArrayList<>();
 		listOfFieldCoordinates.addAll(pieces.keySet());
 		for (FieldCoordinates fieldCoordinates : listOfFieldCoordinates) {
@@ -56,10 +61,14 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 						pickedMove = suggestedMove;
 					}
 
-					if (depth != 0) {
+					if (depth >= 0) {
 						try {
-							chessGame.performMove(suggestedMove.startField, suggestedMove.endField);
-							suggestedMove.moveValue += min(depth);
+							chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
+							if (depth % 2 == 0) {
+								suggestedMove.moveValue += suggestMove().moveValue;
+							} else {
+								suggestedMove.moveValue -= suggestMove().moveValue;
+							}
 							chessGame.revertMove();
 						} catch (InvalidMoveException e) {
 							// TODO Auto-generated catch block
@@ -73,6 +82,8 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 				}
 			}
 		}
+		
+		depth = depth + 1;
 
 		if (pickedMove != null && pickedMove.moveValue > 0) {
 			System.out.println(pickedMove.moveValue);
@@ -119,99 +130,5 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 	@Override
 	public List<Move> getSuggestedMovesThisTurn() {
 		return movesAlreadySuggested;
-	}
-
-	private int min(int depth) {
-		depth = depth - 1;
-		Move pickedMove = null;
-		pieces = opponent.showPieces();
-		List<FieldCoordinates> listOfFieldCoordinates = new ArrayList<>();
-		listOfFieldCoordinates.addAll(pieces.keySet());
-		for (FieldCoordinates fieldCoordinates : listOfFieldCoordinates) {
-			Field candidateField = board.getFieldAbsolute(fieldCoordinates.x, fieldCoordinates.y);
-			ChessPiece piece = candidateField.getChessPiece();
-			List<Field> possibilitiesFields = piece.getPossibleMoves(candidateField);
-			for (Field field : possibilitiesFields) {
-				Move suggestedMove = new Move(candidateField, field);
-				if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)) {
-					continue;
-				} else {
-					if (pickedMove == null) {
-						pickedMove = suggestedMove;
-						continue;
-					}
-
-					if (depth != 0) {
-						try {
-							chessGame.performMove(suggestedMove.startField, suggestedMove.endField);
-							suggestedMove.moveValue += max(depth);
-							chessGame.revertMove();
-						} catch (NullPointerException e) {
-							System.out.println(suggestedMove.startField.getChessPiece() + " " + suggestedMove.endField.toString());
-						} catch (InvalidMoveException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-					if (suggestedMove.moveValue > pickedMove.moveValue) {
-						pickedMove = suggestedMove;
-					}
-				}
-			}
-		}
-
-		if (pickedMove != null) {
-			return -pickedMove.moveValue;
-		} else {
-			return 0;
-		}
-	}
-	
-	private int max(int depth) {
-		depth = depth - 1;
-		Move pickedMove = null;
-		pieces = opponent.showPieces();
-		List<FieldCoordinates> listOfFieldCoordinates = new ArrayList<>();
-		listOfFieldCoordinates.addAll(pieces.keySet());
-		for (FieldCoordinates fieldCoordinates : listOfFieldCoordinates) {
-			Field candidateField = board.getFieldAbsolute(fieldCoordinates.x, fieldCoordinates.y);
-			ChessPiece piece = candidateField.getChessPiece();
-			List<Field> possibilitiesFields = piece.getPossibleMoves(candidateField);
-			for (Field field : possibilitiesFields) {
-				Move suggestedMove = new Move(candidateField, field);
-				if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)) {
-					continue;
-				} else {
-					if (pickedMove == null) {
-						pickedMove = suggestedMove;
-						continue;
-					}
-
-					if (depth != 0) {
-						try {
-							chessGame.performMove(suggestedMove.startField, suggestedMove.endField);
-							suggestedMove.moveValue += min(depth);
-							chessGame.revertMove();
-						} catch (NullPointerException e) {
-							System.out.println(suggestedMove.startField.getChessPiece() + " " + suggestedMove.endField.toString());
-						} catch (InvalidMoveException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-
-					if (suggestedMove.moveValue > pickedMove.moveValue) {
-						pickedMove = suggestedMove;
-					}
-				}
-			}
-		}
-
-		if (pickedMove != null) {
-			return pickedMove.moveValue;
-		} else {
-			return 0;
-		}
 	}
 }
