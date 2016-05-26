@@ -40,6 +40,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 	@Override
 	public Move suggestMove() throws SurrenderException {
 		depth = depth - 1;
+		
 		Move pickedMove = null;
 		if (depth % 2 == 0) {
 			pieces = opponent.showPieces();
@@ -61,7 +62,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 						pickedMove = suggestedMove;
 					}
 
-					if (depth >= 0) {
+					if (depth > 0) {
 						try {
 							chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
 							if (depth % 2 == 0) {
