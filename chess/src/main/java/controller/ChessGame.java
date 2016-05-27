@@ -86,13 +86,14 @@ public class ChessGame {
 	}
 	
 	private void revertUncommitedMove(){
-		LoggedMove lastMove = logger.getCurrentTransaction();
+		LoggedMove lastMove = logger.getLastMove();
 		Field endField = board.getFieldAbsolute(lastMove.endPosition.x, lastMove.endPosition.y);
 		Field startField = board.getFieldAbsolute(lastMove.startPosition.x, lastMove.startPosition.y);
 		ChessPiece movedPiece = Utils.createChessPiece(lastMove.playerColor, lastMove.movingChessPiece, board);
 		ChessPiece killedPiece = Utils.createChessPiece(Utils.getOpposingColor(lastMove.playerColor), lastMove.pieceKilled, board);
 		startField.setChessPiece(movedPiece);
 		endField.setChessPiece(killedPiece);	
+		logger.revertLastMove();
 	}
 	
 	public void revertMove(){
@@ -129,7 +130,11 @@ public class ChessGame {
 		currentPlayerColor = Utils.getOpposingColor(currentPlayerColor);
 	}
 	
-	private Model.Color getOpponentColor(){
+	public Model.Color getPlayerColor(){
+		return currentPlayerColor;
+	}
+	
+	public Model.Color getOpponentColor(){
 		return Utils.getOpposingColor(currentPlayerColor);
 	}
 

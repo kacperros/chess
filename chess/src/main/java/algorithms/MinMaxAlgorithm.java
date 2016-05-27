@@ -3,12 +3,6 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
-import javax.swing.plaf.SliderUI;
-
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
 import controller.ChessGame;
 import exceptions.InvalidMoveException;
 import exceptions.SurrenderException;
@@ -22,14 +16,12 @@ import model.game.Player;
 public class MinMaxAlgorithm implements ChessAlgorithm {
 
 	private Map<FieldCoordinates, ChessPiece> pieces;
-	private final Random generator = new Random();
 	private final Board board;
 	private final Player player;
 	private final Player opponent;
 	private final List<Move> movesAlreadySuggested = new ArrayList<>();
 	private final ChessGame chessGame;
-	private int depth = 2;
-
+	private int depth = 1;
 	public MinMaxAlgorithm(Board board, Player player, Player opponent, ChessGame chessgame) {
 		this.board = board;
 		this.player = player;
@@ -39,14 +31,8 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 
 	@Override
 	public Move suggestMove() throws SurrenderException {
-		depth = depth - 1;
-		
 		Move pickedMove = null;
-		if (depth % 2 == 0) {
-			pieces = opponent.showPieces();
-		} else {
-			pieces = player.showPieces();
-		}
+		pieces = player.showPieces();
 		List<FieldCoordinates> listOfFieldCoordinates = new ArrayList<>();
 		listOfFieldCoordinates.addAll(pieces.keySet());
 		for (FieldCoordinates fieldCoordinates : listOfFieldCoordinates) {
@@ -65,11 +51,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 					if (depth > 0) {
 						try {
 							chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
-							if (depth % 2 == 0) {
-								suggestedMove.moveValue += suggestMove().moveValue;
-							} else {
-								suggestedMove.moveValue -= suggestMove().moveValue;
-							}
+							suggestedMove.moveValue -= min(depth - 1);
 							chessGame.revertMove();
 						} catch (InvalidMoveException e) {
 							// TODO Auto-generated catch block
@@ -83,37 +65,96 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 				}
 			}
 		}
-		
-		depth = depth + 1;
 
-		if (pickedMove != null && pickedMove.moveValue > 0) {
-			System.out.println(pickedMove.moveValue);
+		if (pickedMove != null) {
 			return pickedMove;
 		} else {
-			movesAlreadySuggested.clear();
-			int max = listOfFieldCoordinates.size();
-			for (int i = max; i > 0; i--) {
-				int random = generator.nextInt(listOfFieldCoordinates.size());
-				FieldCoordinates fieldCoordinates = listOfFieldCoordinates.get(random);
-				Field candidateField = board.getFieldAbsolute(fieldCoordinates.x, fieldCoordinates.y);
-				ChessPiece piece = candidateField.getChessPiece();
-				List<Field> possibilitiesFields = piece.getPossibleMoves(candidateField);
-				if (possibilitiesFields.size() != 0) {
-					int k = 0;
-					while (k < possibilitiesFields.size() * 3) {
-						int choice = generator.nextInt(possibilitiesFields.size());
-						Move suggestedMove = new Move(candidateField, possibilitiesFields.get(choice));
-						if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)) {
-							k++;
-							continue;
-						} else
-							return suggestedMove;
-					}
+			throw new SurrenderException();
+		}
+	}
+
+	private int min(int depth) {
+		Move pickedMove = null;
+		pieces = opponent.showPieces();
+		List<FieldCoordinates> listOfFieldCoordinates = new ArrayList<>();
+		listOfFieldCoordinates.addAll(pieces.keySet());
+		for (FieldCoordinates fieldCoordinates : listOfFieldCoordinates) {
+			Field candidateField = board.getFieldAbsolute(fieldCoordinates.x, fieldCoordinates.y);
+			ChessPiece piece = candidateField.getChessPiece();
+			List<Field> possibilitiesFields = piece.getPossibleMoves(candidateField);
+			for (Field field : possibilitiesFields) {
+				Move suggestedMove = new Move(candidateField, field);
+				if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)) {
+					continue;
 				} else {
-					listOfFieldCoordinates.remove(random);
+					if (pickedMove == null) {
+						pickedMove = suggestedMove;
+					}
+
+					if (depth > 0) {
+						try {
+							chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
+							suggestedMove.moveValue += max(depth - 1);
+							chessGame.revertMove();
+						} catch (InvalidMoveException e) {
+							e.printStackTrace();
+						}
+					}
+
+					if (suggestedMove.moveValue > pickedMove.moveValue) {
+						pickedMove = suggestedMove;
+					}
 				}
 			}
-			throw new SurrenderException();
+		}
+
+		if (pickedMove != null) {
+			return pickedMove.moveValue;
+		} else {
+			return 0;
+		}
+	}
+	
+	private int max(int depth) {
+		Move pickedMove = null;
+		pieces = player.showPieces();
+		List<FieldCoordinates> listOfFieldCoordinates = new ArrayList<>();
+		listOfFieldCoordinates.addAll(pieces.keySet());
+		for (FieldCoordinates fieldCoordinates : listOfFieldCoordinates) {
+			Field candidateField = board.getFieldAbsolute(fieldCoordinates.x, fieldCoordinates.y);
+			ChessPiece piece = candidateField.getChessPiece();
+			List<Field> possibilitiesFields = piece.getPossibleMoves(candidateField);
+			for (Field field : possibilitiesFields) {
+				Move suggestedMove = new Move(candidateField, field);
+				if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)) {
+					continue;
+				} else {
+					if (pickedMove == null) {
+						pickedMove = suggestedMove;
+					}
+
+					if (depth > 0) {
+						try {
+							chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
+							suggestedMove.moveValue -= min(depth - 1);
+							chessGame.revertMove();
+						} catch (InvalidMoveException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+					if (suggestedMove.moveValue > pickedMove.moveValue) {
+						pickedMove = suggestedMove;
+					}
+				}
+			}
+		}
+
+		if (pickedMove != null) {
+			return pickedMove.moveValue;
+		} else {
+			return 0;
 		}
 	}
 

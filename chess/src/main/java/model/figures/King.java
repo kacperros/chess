@@ -14,6 +14,8 @@ import model.game.FieldCoordinates;
  * Król
  */
 public class King extends ChessPiece {
+	
+	private final int value = 1;
 
 	private boolean wasMoved;
 
@@ -134,8 +136,8 @@ public class King extends ChessPiece {
 	}
 
 	@Override
-	public int getValue() {
-		return 0;
+	public int getValue(){
+		return value;
 	}
 
 }

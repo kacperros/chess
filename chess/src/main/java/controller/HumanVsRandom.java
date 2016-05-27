@@ -60,7 +60,7 @@ public class HumanVsRandom {
 				timer2 = true;
 			}
 			
-			if( (System.currentTimeMillis() - roundTime) > 60000 && timer2==true)
+			if( (System.currentTimeMillis() - roundTime) > 60000 && timer2==true && false) //dodano warunek na potrzeby debugowania
 			{
 				roundCondition = false;
 				System.out.println("PRZEKROCZYLES CZAS NA RUCH - PORAŻKA");
