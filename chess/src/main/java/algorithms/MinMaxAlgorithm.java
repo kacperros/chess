@@ -21,7 +21,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 	private final Player opponent;
 	private final List<Move> movesAlreadySuggested = new ArrayList<>();
 	private final ChessGame chessGame;
-	private int depth = 1;
+	private int depth = 3;
 	public MinMaxAlgorithm(Board board, Player player, Player opponent, ChessGame chessgame) {
 		this.board = board;
 		this.player = player;
@@ -40,23 +40,23 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 			ChessPiece piece = candidateField.getChessPiece();
 			List<Field> possibilitiesFields = piece.getPossibleMoves(candidateField);
 			for (Field field : possibilitiesFields) {
+				pickedMove = null;
 				Move suggestedMove = new Move(candidateField, field);
 				if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)) {
 					continue;
 				} else {
-					if (pickedMove == null) {
-						pickedMove = suggestedMove;
-					}
-
 					if (depth > 0) {
 						try {
 							chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
-							suggestedMove.moveValue -= min(depth - 1);
+							suggestedMove.moveValue += max(depth - 1);
 							chessGame.revertMove();
 						} catch (InvalidMoveException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							continue;
 						}
+					}
+					
+					if (pickedMove == null) {
+						pickedMove = suggestedMove;
 					}
 
 					if (suggestedMove.moveValue > pickedMove.moveValue) {
@@ -83,22 +83,23 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 			ChessPiece piece = candidateField.getChessPiece();
 			List<Field> possibilitiesFields = piece.getPossibleMoves(candidateField);
 			for (Field field : possibilitiesFields) {
+				pickedMove = null;
 				Move suggestedMove = new Move(candidateField, field);
 				if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)) {
 					continue;
 				} else {
-					if (pickedMove == null) {
-						pickedMove = suggestedMove;
-					}
-
 					if (depth > 0) {
 						try {
 							chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
 							suggestedMove.moveValue += max(depth - 1);
 							chessGame.revertMove();
 						} catch (InvalidMoveException e) {
-							e.printStackTrace();
+							continue;
 						}
+					}
+					
+					if (pickedMove == null) {
+						pickedMove = suggestedMove;
 					}
 
 					if (suggestedMove.moveValue > pickedMove.moveValue) {
@@ -125,23 +126,23 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 			ChessPiece piece = candidateField.getChessPiece();
 			List<Field> possibilitiesFields = piece.getPossibleMoves(candidateField);
 			for (Field field : possibilitiesFields) {
+				pickedMove = null;
 				Move suggestedMove = new Move(candidateField, field);
 				if (checkIfAlreadySuggested(movesAlreadySuggested, suggestedMove)) {
 					continue;
 				} else {
-					if (pickedMove == null) {
-						pickedMove = suggestedMove;
-					}
-
 					if (depth > 0) {
 						try {
 							chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
-							suggestedMove.moveValue -= min(depth - 1);
+							suggestedMove.moveValue += max(depth - 1);
 							chessGame.revertMove();
 						} catch (InvalidMoveException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							continue;
 						}
+					}
+					
+					if (pickedMove == null) {
+						pickedMove = suggestedMove;
 					}
 
 					if (suggestedMove.moveValue > pickedMove.moveValue) {

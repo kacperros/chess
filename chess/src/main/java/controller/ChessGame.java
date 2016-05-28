@@ -56,7 +56,7 @@ public class ChessGame {
 			throw new InvalidMoveException();
 	}
 	
-	private MoveResult checkMoveExtraResults() throws InvalidMoveException {
+	public MoveResult checkMoveExtraResults() throws InvalidMoveException {
 		if(isPlayerChecked(currentPlayerColor)){
 			revertUncommitedMove();
 			updatePlayers();
