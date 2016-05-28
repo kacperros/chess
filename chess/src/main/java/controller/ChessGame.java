@@ -86,6 +86,16 @@ public class ChessGame {
 	}
 	
 	private void revertUncommitedMove(){
+		LoggedMove lastMove = logger.getCurrentTransaction();
+		Field endField = board.getFieldAbsolute(lastMove.endPosition.x, lastMove.endPosition.y);
+		Field startField = board.getFieldAbsolute(lastMove.startPosition.x, lastMove.startPosition.y);
+		ChessPiece movedPiece = Utils.createChessPiece(lastMove.playerColor, lastMove.movingChessPiece, board);
+		ChessPiece killedPiece = Utils.createChessPiece(Utils.getOpposingColor(lastMove.playerColor), lastMove.pieceKilled, board);
+		startField.setChessPiece(movedPiece);
+		endField.setChessPiece(killedPiece);	
+	}
+	
+	private void revertCommitedMove(){
 		LoggedMove lastMove = logger.getLastMove();
 		Field endField = board.getFieldAbsolute(lastMove.endPosition.x, lastMove.endPosition.y);
 		Field startField = board.getFieldAbsolute(lastMove.startPosition.x, lastMove.startPosition.y);
@@ -97,7 +107,7 @@ public class ChessGame {
 	}
 	
 	public void revertMove(){
-		revertUncommitedMove();
+		revertCommitedMove();
 		updatePlayers();
 		board.renumberFields();
 		switchPlayers();
