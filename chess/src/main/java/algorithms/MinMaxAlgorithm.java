@@ -6,6 +6,7 @@ import java.util.Map;
 import controller.ChessGame;
 import exceptions.InvalidMoveException;
 import exceptions.SurrenderException;
+import model.Model.Color;
 import model.Move;
 import model.figures.ChessPiece;
 import model.game.Board;
@@ -21,7 +22,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 	private final Player opponent;
 	private final List<Move> movesAlreadySuggested = new ArrayList<>();
 	private final ChessGame chessGame;
-	private int depth = 1;
+	private int depth = 3;
 
 	public MinMaxAlgorithm(Board board, Player player, Player opponent, ChessGame chessgame) {
 		this.board = board;
@@ -46,13 +47,13 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 				if (depth > 0) {
 					try {
 						chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
-						suggestedMove.moveValue -= min(depth - 1);
+						suggestedMove.moveValue = -min(depth - 1);
 						chessGame.revertMove();
 					} catch (InvalidMoveException e) {
 						continue;
 					}
 				}
-				
+
 				if (pickedMove == null) {
 					pickedMove = suggestedMove;
 				}
@@ -86,13 +87,13 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 				if (depth > 0) {
 					try {
 						chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
-						suggestedMove.moveValue += max(depth - 1);
+						suggestedMove.moveValue = -max(depth - 1);
 						chessGame.revertMove();
 					} catch (InvalidMoveException e) {
 						continue;
 					}
 				}
-				
+
 				if (pickedMove == null) {
 					pickedMove = suggestedMove;
 				}
@@ -106,7 +107,9 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 
 		if (pickedMove != null) {
 			return pickedMove.moveValue;
-		} else {
+		} else if(chessGame.isPlayerChecked(Color.white)){
+			return -10000;
+		}else {
 			return 0;
 		}
 	}
@@ -126,13 +129,13 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 				if (depth > 0) {
 					try {
 						chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
-						suggestedMove.moveValue -= min(depth - 1);
+						suggestedMove.moveValue = -min(depth - 1);
 						chessGame.revertMove();
 					} catch (InvalidMoveException e) {
 						continue;
 					}
 				}
-				
+
 				if (pickedMove == null) {
 					pickedMove = suggestedMove;
 				}
@@ -146,6 +149,8 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 
 		if (pickedMove != null) {
 			return pickedMove.moveValue;
+		} else if (chessGame.isPlayerChecked(Color.black)) {
+			return -10000;
 		} else {
 			return 0;
 		}
