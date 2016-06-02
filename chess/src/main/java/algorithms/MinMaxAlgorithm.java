@@ -46,8 +46,11 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 
 				if (depth > 0) {
 					try {
+						if(suggestedMove.endField.getChessPiece() !=null){
+							suggestedMove.moveValue += 2;
+						}
 						chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
-						suggestedMove.moveValue = -min(depth - 1);
+						suggestedMove.moveValue -= min(depth - 1);
 						chessGame.revertMove();
 					} catch (InvalidMoveException e) {
 						continue;
@@ -87,7 +90,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 				if (depth > 0) {
 					try {
 						chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
-						suggestedMove.moveValue = -max(depth - 1);
+						suggestedMove.moveValue -= max(depth - 1);
 						chessGame.revertMove();
 					} catch (InvalidMoveException e) {
 						continue;
@@ -129,7 +132,7 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 				if (depth > 0) {
 					try {
 						chessGame.movePieceAndLogMove(suggestedMove.startField, suggestedMove.endField);
-						suggestedMove.moveValue = -min(depth - 1);
+						suggestedMove.moveValue -= min(depth - 1);
 						chessGame.revertMove();
 					} catch (InvalidMoveException e) {
 						continue;
@@ -154,11 +157,6 @@ public class MinMaxAlgorithm implements ChessAlgorithm {
 		} else {
 			return 0;
 		}
-	}
-
-	private boolean checkIfAlreadySuggested(List<Move> movesAlreadySuggested, Move suggestedMove) {
-		return movesAlreadySuggested.contains(suggestedMove);
-
 	}
 
 	@Override

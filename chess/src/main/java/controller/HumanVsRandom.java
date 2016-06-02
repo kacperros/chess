@@ -20,6 +20,7 @@ public class HumanVsRandom {
 	
 	static boolean play=true;
 	static boolean roundCondition=true;
+	static boolean isLasting=false;
 	
 	static boolean flaga=false;
 	static boolean round=false;
@@ -44,7 +45,9 @@ public class HumanVsRandom {
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			view.update(game.getBoard());
+			if(isLasting==true){
+				view.update(game.getBoard());
+			}
 			
 			if(flaga==true)
 			{
@@ -94,7 +97,7 @@ public class HumanVsRandom {
     }
 	
 	public void play(){
-		
+		view.update(game.getBoard());
 		boolean ret = false;
 				
 		int sourceX=-1;
@@ -112,7 +115,7 @@ public class HumanVsRandom {
     	}
 
 	    while(play && roundCondition){
-	    	
+	    	isLasting=true;
 	    	if(ret==false)
 	    		round = true;
 
@@ -124,9 +127,6 @@ public class HumanVsRandom {
 	    	sourceY = tab[1];
 
 	    	view.setChecked((7 - Math.abs(sourceY)), sourceX);
-	    	//System.out.println("source: ");
-	    	//System.out.println(sourceX);
-	    	//System.out.println(sourceY);
 	    	
 	    	tab[0]=-1;
 	    	tab[1]=-1;
@@ -137,10 +137,6 @@ public class HumanVsRandom {
 	    	
 	    	destinationX = tab[0];
 	    	destinationY = tab[1];
-	    	
-	    	//System.out.println("destination: ");
-	    	//System.out.println(destinationX);
-	    	//System.out.println(destinationY);
 	    	
 	    	tab[0]=-1;
 	    	tab[1]=-1;
@@ -165,9 +161,8 @@ public class HumanVsRandom {
 	    	}
 	    	view.setUnChecked((7 - Math.abs(sourceY)), sourceX);
 	    	ret = false;
-	    	
-	    	//view.update(game.getBoard());
-	    	
+	    	isLasting=false;
+	    	view.update(game.getBoard());
 	    	sleep();
 
 	     	try {
@@ -176,7 +171,8 @@ public class HumanVsRandom {
 	    		System.out.println("Wygrales!!! GRATULACJE ;-) ");	
 				return;
 			}
-	    	
+	     	view.update(game.getBoard());
+	     	sleep();
 	    	//view.update(game.getBoard());	
 	    }
 	    	timer.stop();

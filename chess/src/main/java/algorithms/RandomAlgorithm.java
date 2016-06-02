@@ -23,7 +23,6 @@ public class RandomAlgorithm implements ChessAlgorithm {
 
 	public RandomAlgorithm(Board board, Player player) {
 		this.board = board;
-		System.out.println(" kolor randa222 " + player.getColor());
 		this.player = player;
 	}
 

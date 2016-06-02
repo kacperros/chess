@@ -4,11 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
-import controller.HumanComputerGameController;
-import exceptions.InvalidMoveException;
 import exceptions.SurrenderException;
-import model.Move;
-import model.game.Field;
 import view.View;
 
 public class RandomVsMinMax {
@@ -44,7 +40,7 @@ public class RandomVsMinMax {
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			view.update(game.getBoard());
+			//view.update(game.getBoard());
 			
 			if(flaga==true)
 			{
@@ -87,7 +83,7 @@ public class RandomVsMinMax {
 	
 	public void sleep(){
         try {
-            Thread.sleep(2000);                 //1000 milisekund = 1 sekunda
+            Thread.sleep(50);                 //1000 milisekund = 1 sekunda
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
@@ -101,6 +97,7 @@ public class RandomVsMinMax {
     	}
 
 	    while(play && roundCondition){
+	    	view.update(game.getBoard());
     		round = true;    	
 	     	try {
 	     		game.opponentMoveRandom();
@@ -108,6 +105,7 @@ public class RandomVsMinMax {
 	    		System.out.println("Wygral MinMax!!!");	
 				return;
 			}
+	     	view.update(game.getBoard());
 	     	sleep();
 	     	round = true;
 	     	try {
@@ -116,8 +114,8 @@ public class RandomVsMinMax {
 	    		System.out.println("Wygral Losowy!!!");	
 				return;
 			}
-	     	sleep();
-	    	//view.update(game.getBoard());	
+	     	view.update(game.getBoard());
+	     	sleep();	
 	    }
 	    	timer.stop();
 	    	System.out.println("Koniec czasu - REMIS!!!");
