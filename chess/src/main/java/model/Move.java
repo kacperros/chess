@@ -1,6 +1,5 @@
 package model;
 
-import model.Model.Color;
 import model.game.Field;
 
 public class Move {
@@ -14,9 +13,6 @@ public class Move {
 		
 		if(endField.getChessPiece()!=null){
 			moveValue = endField.getChessPiece().getValue();
-			if(endField.getChessPiece().getColor() == Color.white){
-				moveValue++;
-			}
 		} else {
 			moveValue = 0;
 		}
