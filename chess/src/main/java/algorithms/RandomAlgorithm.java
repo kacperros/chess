@@ -23,6 +23,7 @@ public class RandomAlgorithm implements ChessAlgorithm {
 
 	public RandomAlgorithm(Board board, Player player) {
 		this.board = board;
+		System.out.println(" kolor randa222 " + player.getColor());
 		this.player = player;
 	}
 
@@ -38,6 +39,9 @@ public class RandomAlgorithm implements ChessAlgorithm {
 			Field candidateField = board.getFieldAbsolute(coords.x, coords.y);
 			ChessPiece piece = candidateField.getChessPiece();
 			List<Field> possibilities = piece.getPossibleMoves(candidateField);
+			//System.out.println("kolor randoma " + player.getColor());
+			//System.out.println("size " + max);
+			//System.out.println("ilosc mozliwosci " + possibilities.size());
 			if (possibilities.size() != 0) {
 				int k = 0;
 				while (k < possibilities.size() * 3) {
@@ -58,7 +62,6 @@ public class RandomAlgorithm implements ChessAlgorithm {
 
 	private boolean checkIfAlreadySuggested(List<Move> movesAlreadySuggested, Move suggestedMove) {
 		return movesAlreadySuggested.contains(suggestedMove);
-
 	}
 
 	@Override

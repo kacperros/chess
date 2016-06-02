@@ -25,4 +25,8 @@ public class AlgorithmFactory {
 		return new RandomAlgorithm(board, opponent);
 	}
 	
+	public RandomAlgorithm getRandomAlgorithmInstanceComputer(){
+		return new RandomAlgorithm(board, player);
+	}
+	
 }

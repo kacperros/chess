@@ -11,12 +11,12 @@ import model.Move;
 import model.game.Field;
 import view.View;
 
-public class HumanVsRandom {
+public class RandomVsMinMax {
 	
 	View view;
-	HumanComputerGameController game;
-	private int tab[];
+	ComputerComputerGameController game;
 	private long times[];
+	private int tab[];
 	
 	static boolean play=true;
 	static boolean roundCondition=true;
@@ -33,13 +33,13 @@ public class HumanVsRandom {
 	static long generalViewTime = 0;
 	static long roundViewTime = 0;
 	
-	public HumanVsRandom (HumanComputerGameController a, View b, int c[], long d[] ) {
+	public RandomVsMinMax (ComputerComputerGameController a, View b, int c[], long d[] ) {
 		this.game = a;
 		this.view = b;
 		this.tab = c;
 		this.times = d;
 	}
-	
+
 	private Timer timer = new Timer(50, new ActionListener()
 	{
 		public void actionPerformed(ActionEvent e)
@@ -87,24 +87,13 @@ public class HumanVsRandom {
 	
 	public void sleep(){
         try {
-            Thread.sleep(500);                 //1000 milisekund = 1 sekunda
+            Thread.sleep(2000);                 //1000 milisekund = 1 sekunda
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
     }
 	
-	public void play(){
-		
-		boolean ret = false;
-				
-		int sourceX=-1;
-		int sourceY=-1;
-		int destinationX=-1;
-		int destinationY=-1;
-		
-        Field source=null;
-        Field destination=null;
-	    
+	public void play(){   
     	if(flaga==false)
     	{
     		flaga=true;
@@ -112,71 +101,22 @@ public class HumanVsRandom {
     	}
 
 	    while(play && roundCondition){
-	    	
-	    	if(ret==false)
-	    		round = true;
-
-	    	while (tab[0]==-1 || tab[1]==-1) {
-	    		sleep();
-	    	}
-	    	
-	    	sourceX = tab[0];
-	    	sourceY = tab[1];
-
-	    	view.setChecked((7 - Math.abs(sourceY)), sourceX);
-	    	//System.out.println("source: ");
-	    	//System.out.println(sourceX);
-	    	//System.out.println(sourceY);
-	    	
-	    	tab[0]=-1;
-	    	tab[1]=-1;
-    	
-	    	while (tab[0]==-1 || tab[1]==-1){
-	    		sleep();
-	    	}
-	    	
-	    	destinationX = tab[0];
-	    	destinationY = tab[1];
-	    	
-	    	//System.out.println("destination: ");
-	    	//System.out.println(destinationX);
-	    	//System.out.println(destinationY);
-	    	
-	    	tab[0]=-1;
-	    	tab[1]=-1;
-	    	
-	    	source = game.getBoard().getFieldAbsolute(sourceX, sourceY);
-	    	destination = game.getBoard().getFieldAbsolute(destinationX, destinationY);
-	    	
-	    	Move move = new Move (source, destination);
-	    	
-	        for (int i=0;i<2;++i)
-	        {
-	        	tab[i] = -1; 
-	        }
-
-	    	try {
-	    		game.playerMove(move);
-	    	} catch (InvalidMoveException e) {
-	    		view.setUnChecked((7 - Math.abs(sourceY)), sourceX);
-	    		System.out.println("wybierz ponownie");	
-	    		ret = true;
-	    		continue;
-	    	}
-	    	view.setUnChecked((7 - Math.abs(sourceY)), sourceX);
-	    	ret = false;
-	    	
-	    	//view.update(game.getBoard());
-	    	
-	    	sleep();
-
+    		round = true;    	
+	     	try {
+	     		game.opponentMoveRandom();
+	    	} catch (SurrenderException e) {
+	    		System.out.println("Wygral MinMax!!!");	
+				return;
+			}
+	     	sleep();
+	     	round = true;
 	     	try {
 	     		game.opponentMove();
 	    	} catch (SurrenderException e) {
-	    		System.out.println("Wygrales!!! GRATULACJE ;-) ");	
+	    		System.out.println("Wygral Losowy!!!");	
 				return;
 			}
-	    	
+	     	sleep();
 	    	//view.update(game.getBoard());	
 	    }
 	    	timer.stop();

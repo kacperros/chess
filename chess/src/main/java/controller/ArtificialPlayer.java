@@ -14,12 +14,12 @@ public class ArtificialPlayer extends Player{
 	
 	public ArtificialPlayer(Color color, Board board) {
 		super(color, board);
+		System.out.println("kolo " + color);
 	}
 	
 	public void setChessAlgorithm(ChessAlgorithm algorithm){
 		this.algorithm = algorithm;
 	}
-	
 	
 	public Move move() throws SurrenderException{
 		return algorithm.suggestMove();
